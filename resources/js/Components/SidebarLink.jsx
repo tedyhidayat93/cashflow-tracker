@@ -8,7 +8,7 @@ export default function SidebarLink({ active = false, isCollapsed = false, href,
             className={
                 'flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 group ' +
                 (active
-                    ? 'bg-[#2D5A27] text-white shadow-lg shadow-[#15261C]'
+                    ? 'bg-primary-800 text-white shadow shadow-[#15261C]'
                     : 'hover:bg-[#2D5A27]/20 text-[#A8B5A7] hover:text-[#F4F4E8]')
             }
             title={isCollapsed ? children : ''} // Munculkan tooltip saat collapsed

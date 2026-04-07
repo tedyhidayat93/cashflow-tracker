@@ -27,7 +27,7 @@ export default function Register() {
 
             {/* Header Form */}
             <div className="mb-8 text-center">
-                <h2 className="text-2xl font-black text-[#1B3022] dark:text-[#F4F4E8] uppercase tracking-tight">
+                <h2 className="text-2xl font-black text-[#2D5A27] dark:text-[#F4F4E8] uppercase tracking-tight">
                     Buka <span className="text-[#2D5A27]">Akun Baru</span>
                 </h2>
                 <p className="text-xs font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/40 uppercase tracking-widest mt-1">
@@ -41,14 +41,14 @@ export default function Register() {
                     <InputLabel 
                         htmlFor="name" 
                         value="Nama Lengkap" 
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-xs tracking-widest"
                     />
 
                     <TextInput
                         id="name"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8]"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8]"
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
@@ -63,7 +63,7 @@ export default function Register() {
                     <InputLabel 
                         htmlFor="email" 
                         value="Alamat Email" 
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-xs tracking-widest"
                     />
 
                     <TextInput
@@ -71,7 +71,7 @@ export default function Register() {
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8]"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8]"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
@@ -85,7 +85,7 @@ export default function Register() {
                     <InputLabel 
                         htmlFor="password" 
                         value="Password" 
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-xs tracking-widest"
                     />
 
                     <TextInput
@@ -93,7 +93,7 @@ export default function Register() {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8]"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8]"
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
                         required
@@ -107,7 +107,7 @@ export default function Register() {
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="Konfirmasi Password"
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-xs tracking-widest"
                     />
 
                     <TextInput
@@ -115,7 +115,7 @@ export default function Register() {
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8]"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8]"
                         autoComplete="new-password"
                         onChange={(e) =>
                             setData('password_confirmation', e.target.value)
@@ -131,7 +131,7 @@ export default function Register() {
 
                 <div className="mt-8 flex flex-col gap-4">
                     <PrimaryButton 
-                        className="w-full justify-center py-3 bg-[#1B3022] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-xs transition-all shadow-lg shadow-[#2D5A27]/20" 
+                        className="w-full justify-center py-3 bg-[#2D5A27] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-xs transition-all shadow-lg shadow-[#2D5A27]/20" 
                         disabled={processing}
                     >
                         Daftar Sekarang
@@ -140,7 +140,7 @@ export default function Register() {
                     <div className="text-center mt-2">
                         <Link
                             href={route('login')}
-                            className="text-xs text-[#4A5D50] dark:text-[#85BB65]/60 hover:text-[#1B3022] dark:hover:text-[#85BB65] transition-colors"
+                            className="text-xs text-[#4A5D50] dark:text-[#85BB65]/60 hover:text-[#2D5A27] dark:hover:text-[#85BB65] transition-colors"
                         >
                             Sudah punya akun? <span className="font-bold underline decoration-[#C5C5B0]">Silakan Login</span>
                         </Link>

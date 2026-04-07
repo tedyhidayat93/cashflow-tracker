@@ -15,6 +15,20 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: {
+                    50: '#F4F4E8',
+                    100: '#E8E8D5',
+                    200: '#D8E6D1',
+                    300: '#C5C5B0',
+                    400: '#B8CBB0',
+                    500: '#85BB65',
+                    600: '#4A7C44',
+                    700: '#2D5A27',
+                    800: '#1A3415',
+                    900: '#0D1A12',
+                },
+            },
             animation: {
                 blob: "blob 7s infinite",
             },

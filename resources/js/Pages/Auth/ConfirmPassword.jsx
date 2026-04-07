@@ -29,7 +29,7 @@ export default function ConfirmPassword() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                 </div>
-                <h2 className="text-xl font-black text-[#1B3022] dark:text-[#F4F4E8] uppercase tracking-tight mb-2">
+                <h2 className="text-xl font-black text-[#2D5A27] dark:text-[#F4F4E8] uppercase tracking-tight mb-2">
                     Area <span className="text-[#2D5A27]">Terproteksi</span>
                 </h2>
                 <p className="text-[12px] leading-relaxed text-[#4A5D50] dark:text-[#A8B5A7] font-medium px-4 py-2 border border-[#C5C5B0] bg-[#F4F4E8]/50 dark:bg-[#0D1A12]/30 rounded-lg">
@@ -42,7 +42,7 @@ export default function ConfirmPassword() {
                     <InputLabel 
                         htmlFor="password" 
                         value="Password Keamanan" 
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
                     />
 
                     <TextInput
@@ -50,7 +50,7 @@ export default function ConfirmPassword() {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8]"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8]"
                         isFocused={true}
                         placeholder="••••••••"
                         onChange={(e) => setData('password', e.target.value)}
@@ -61,10 +61,10 @@ export default function ConfirmPassword() {
 
                 <div className="mt-8">
                     <PrimaryButton 
-                        className="w-full justify-center py-3.5 bg-[#1B3022] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-[#2D5A27]/20" 
+                        className="w-full justify-center py-3.5 bg-[#2D5A27] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-[#2D5A27]/20" 
                         disabled={processing}
                     >
-                        Buka Akses Brankas
+                        Buka Akses
                     </PrimaryButton>
                 </div>
 

@@ -27,7 +27,7 @@ export default function ResetPassword({ token, email }) {
 
             {/* Header: Update Kunci Akses */}
             <div className="mb-8 text-center">
-                <h2 className="text-2xl font-black text-[#1B3022] dark:text-[#F4F4E8] uppercase tracking-tight">
+                <h2 className="text-2xl font-black text-[#2D5A27] dark:text-[#F4F4E8] uppercase tracking-tight">
                     Reset <span className="text-[#2D5A27]">Kunci Akses</span>
                 </h2>
                 <p className="text-xs font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/40 uppercase tracking-widest mt-1">
@@ -41,7 +41,7 @@ export default function ResetPassword({ token, email }) {
                     <InputLabel 
                         htmlFor="email" 
                         value="Email Terverifikasi" 
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
                     />
 
                     <TextInput
@@ -49,7 +49,7 @@ export default function ResetPassword({ token, email }) {
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] opacity-70 bg-[#E8E8D5]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8] cursor-not-allowed"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] opacity-70 bg-[#E8E8D5]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8] cursor-not-allowed"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         readOnly
@@ -63,7 +63,7 @@ export default function ResetPassword({ token, email }) {
                     <InputLabel 
                         htmlFor="password" 
                         value="Password Baru" 
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
                     />
 
                     <TextInput
@@ -71,7 +71,7 @@ export default function ResetPassword({ token, email }) {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8]"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8]"
                         autoComplete="new-password"
                         isFocused={true}
                         onChange={(e) => setData('password', e.target.value)}
@@ -85,7 +85,7 @@ export default function ResetPassword({ token, email }) {
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="Konfirmasi Password Baru"
-                        className="text-[#1B3022] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
+                        className="text-[#2D5A27] dark:text-[#D1D9D0] font-bold uppercase text-[10px] tracking-widest"
                     />
 
                     <TextInput
@@ -93,7 +93,7 @@ export default function ResetPassword({ token, email }) {
                         id="password_confirmation"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#1B3022] dark:text-[#F4F4E8]"
+                        className="mt-1 block w-full border-[#C5C5B0] dark:border-[#2D5A27] focus:border-[#2D5A27] focus:ring-[#2D5A27] bg-[#F4F4E8]/50 dark:bg-[#0D1A12] text-[#2D5A27] dark:text-[#F4F4E8]"
                         autoComplete="new-password"
                         onChange={(e) =>
                             setData('password_confirmation', e.target.value)
@@ -109,7 +109,7 @@ export default function ResetPassword({ token, email }) {
                 {/* Submit Action */}
                 <div className="mt-8">
                     <PrimaryButton 
-                        className="w-full justify-center py-3.5 bg-[#1B3022] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-[#2D5A27]/20" 
+                        className="w-full justify-center py-3.5 bg-[#2D5A27] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-[#2D5A27]/20" 
                         disabled={processing}
                     >
                         Perbarui Kredensial Sekarang

@@ -22,7 +22,7 @@ export default function VerifyEmail({ status }) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                 </div>
-                <h2 className="text-xl font-black text-[#1B3022] dark:text-[#F4F4E8] uppercase tracking-tight">
+                <h2 className="text-xl font-black text-[#2D5A27] dark:text-[#F4F4E8] uppercase tracking-tight">
                     Verifikasi <span className="text-[#2D5A27]">Identitas</span>
                 </h2>
             </div>
@@ -40,7 +40,7 @@ export default function VerifyEmail({ status }) {
             <form onSubmit={submit}>
                 <div className="mt-8 flex flex-col gap-4">
                     <PrimaryButton 
-                        className="w-full justify-center py-3.5 bg-[#1B3022] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-[#2D5A27]/20" 
+                        className="w-full justify-center py-3.5 bg-[#2D5A27] hover:bg-[#2D5A27] dark:bg-[#2D5A27] dark:hover:bg-[#3D7A36] text-[#F4F4E8] font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-[#2D5A27]/20" 
                         disabled={processing}
                     >
                         Kirim Ulang Email Verifikasi
