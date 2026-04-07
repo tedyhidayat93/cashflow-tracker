@@ -2,7 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import SidebarLink from '@/Components/SidebarLink'; // Import komponen baru
 import { Link, usePage } from '@inertiajs/react';
-import { LogOut, User2, BarChart3, Wallet, Settings, Users, History, Tags, Plus, ArrowUp, ArrowDown, ArrowRight, ArrowRightLeft } from 'lucide-react';
+import { LogOut, User2, BarChart3, Wallet, Settings, Users, History, Tags, Plus, ArrowUp, ArrowDown, ArrowRight, ArrowRightLeft, BoxIcon, DollarSign, BadgeDollarSign, PaintBucket, HandCoins } from 'lucide-react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
@@ -19,10 +19,10 @@ export default function AuthenticatedLayout({ header, children }) {
         { name: 'Dashboard', icon: <BarChart3 className="w-5 h-5" />, route: 'dashboard' },
         { name: 'Transaksi', icon: <History className="w-5 h-5" />, route: 'transactions.index' },
         { name: 'Dompet', icon: <Wallet className="w-5 h-5" />, route: 'budget.index' },
+        { name: 'Budgeting', icon: <HandCoins className="w-5 h-5" />, route: 'transactions.index'},
         { name: 'Kategori', icon: <Tags className="w-5 h-5" />, route: 'budget.index' },
-
-        // { name: 'Pengaturan', icon: <Settings className="w-5 h-5" />, route: 'settings.edit' },
         { name: 'User Manajemen', icon: <Users className="w-5 h-5" />, route: 'users.index' },
+        { name: 'Pengaturan', icon: <Settings className="w-5 h-5" />, route: 'settings.edit' },
     ];
 
     return (

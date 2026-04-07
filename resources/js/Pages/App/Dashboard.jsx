@@ -12,6 +12,8 @@ export default function Dashboard() {
     const wallets = [
         { id: 1, name: 'Bank Central', balance: 'Rp 8.500.000', lastIn: 'Rp 2.000.000', lastOut: 'Rp 150.000', color: 'bg-[#1B3022]' },
         { id: 2, name: 'E-Wallet Dana', balance: 'Rp 4.000.000', lastIn: 'Rp 500.000', lastOut: 'Rp 25.000', color: 'bg-[#2D5A27]' },
+        { id: 3, name: 'Bank BRI', balance: 'Rp 2.000.000', lastIn: 'Rp 1.000.000', lastOut: 'Rp 50.000', color: 'bg-[#1B3022]' },
+        { id: 4, name: 'E-Wallet OVO', balance: 'Rp 1.000.000', lastIn: 'Rp 500.000', lastOut: 'Rp 25.000', color: 'bg-[#2D5A27]' },
     ];
 
     // 2. Logic: Konsolidasi Data (Menghitung total dari semua dompet)
@@ -325,14 +327,14 @@ export default function Dashboard() {
                     <AISummaryCard/>
 
                     {/* --- STATS SECTION: KONSOLIDASI --- */}
-                    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                    <section className="grid grid-cols-3 gap-4 md:gap-6">
                         {stats.map((stat) => (
-                            <div key={stat.name} className={`overflow-hidden ${stat.bg} dark:bg-[#2D5A27]/40 shadow-sm sm:rounded-3xl border-2 ${stat.border} dark:border-[#2D5A27]/30 transition-all hover:scale-[1.02] duration-300`}>
+                            <div key={stat.name} className={`overflow-hidden ${stat.bg} dark:bg-[#2D5A27]/40 shadow-sm rounded-3xl border-2 ${stat.border} dark:border-[#2D5A27]/30 transition-all hover:scale-[1.02] duration-300`}>
                                 <div className="p-6">
-                                    <p className="text-[10px] font-black text-[#4A5D50] dark:text-[#85BB65]/60 uppercase tracking-[0.2em]">
+                                    <p className="text-[7px] md:text-[10px] font-black text-[#4A5D50] dark:text-[#85BB65]/60 uppercase tracking-[0.2em]">
                                         {stat.name}
                                     </p>
-                                    <p className={`mt-2 text-xl lg:text-3xl font-black tracking-tighter ${stat.color}`}>
+                                    <p className={`mt-2 text-base lg:text-3xl font-black tracking-tighter ${stat.color}`}>
                                         {stat.value}
                                     </p>
                                     <div className="mt-2 flex items-center gap-1">
@@ -352,49 +354,67 @@ export default function Dashboard() {
                             <h3 className="text-[11px] font-black text-[#1B3022] dark:text-[#85BB65] uppercase tracking-[0.3em]">Dompet Penyimpanan</h3>
                             <button className="text-[10px] font-bold text-[#2D5A27] hover:underline uppercase">+ Tambah Dompet</button>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {wallets.map((wallet) => (
-                                <div key={wallet.id} className={`${wallet.color} rounded-[2rem] p-6 text-[#F4F4E8] shadow-2xl relative overflow-hidden group border border-[#85BB65]/20 transition-all hover:translate-y-[-4px]`}>
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#85BB65]/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-[#85BB65]/40 transition-all"></div>
-                                    
-                                    <div className="relative z-10 flex flex-col h-full justify-between">
-                                        <div className="flex justify-between items-start mb-6">
-                                            <div>
-                                                <p className="text-[10px] font-bold uppercase tracking-widest text-[#85BB65] mb-1 italic">Dompet</p>
-                                                <h4 className="text-lg font-black uppercase tracking-tight">{wallet.name}</h4>
-                                            </div>
-                                            <div className="w-10 h-6 bg-[#85BB65]/20 rounded-md border border-[#85BB65]/10 flex items-center justify-center">
-                                                <div className="w-3 h-3 bg-[#85BB65] rounded-full opacity-40"></div>
-                                            </div>
-                                        </div>
+                        
+                        {/* Horizontal Scroll Container */}
+                        <div className="relative">
+                            {/* Scroll Indicators */}
+                            {/* <div className="absolute right-0 top-0 bottom-0 w-32 pointer-events-none z-10
+                                bg-gradient-to-l 
+                                from-[#F4F4E8]/90   
+                                via-[#F4F4E8]/30     
+                                to-[#F4F4E8]/0       
+                                dark:from-[#0D1A12]/95 
+                                dark:via-[#0D1A12]/20 
+                                dark:to-[#0D1A12]/0">
+                            </div> */}
 
-                                        <div className="mb-6">
-                                            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#85BB65]/80">Saldo</p>
-                                            <p className="text-2xl font-black tracking-tighter">{wallet.balance}</p>
-                                        </div>
+                            {/* Horizontal Scroll */}
+                            <div className="overflow-x-auto overflow-y-hidden pt-4 pb-1 scrollbar-hidden">
+                                <div className="flex gap-4" style={{ minWidth: 'max-content' }}>
+                                    {wallets.map((wallet) => (
+                                        <div key={wallet.id} className={`${wallet.color} rounded-[2rem] p-6 text-[#F4F4E8] relative overflow-hidden group border border-[#85BB65]/20 transition-all hover:translate-y-[-4px] flex-shrink-0`} style={{ width: '310px' }}>
+                                            <div className="absolute top-0 right-0 w-32 h-32 bg-[#85BB65]/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-[#85BB65]/40 transition-all"></div>
+                                            
+                                            <div className="relative z-10 flex flex-col h-full justify-between">
+                                                <div className="flex justify-between items-start mb-6">
+                                                    <div>
+                                                        <p className="text-[10px] font-bold uppercase tracking-widest text-[#85BB65] mb-1 italic">Dompet</p>
+                                                        <h4 className="text-lg font-black uppercase tracking-tight">{wallet.name}</h4>
+                                                    </div>
+                                                    <div className="w-10 h-6 bg-[#85BB65]/20 rounded-md border border-[#85BB65]/10 flex items-center justify-center">
+                                                        <div className="w-3 h-3 bg-[#85BB65] rounded-full opacity-40"></div>
+                                                    </div>
+                                                </div>
 
-                                        <div className="grid grid-cols-2 gap-4 border-t border-[#F4F4E8]/10 pt-4 mb-6">
-                                            <div>
-                                                <p className="text-[8px] font-bold uppercase text-[#85BB65]">Pemasukan</p>
-                                                <p className="text-xs font-bold text-white">{wallet.lastIn}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-[8px] font-bold uppercase text-red-400">Pengeluaran</p>
-                                                <p className="text-xs font-bold text-white">{wallet.lastOut}</p>
-                                            </div>
-                                        </div>
+                                                <div className="mb-6">
+                                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#85BB65]/80">Saldo</p>
+                                                    <p className="text-2xl font-black tracking-tighter">{wallet.balance}</p>
+                                                </div>
 
-                                        <div className="flex gap-2">
-                                            <button className="flex-1 py-2 bg-[#F4F4E8] text-[#1B3022] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#85BB65] transition-colors">
-                                                Lihat Riwayat
-                                            </button>
-                                            <button className="px-4 py-2 bg-transparent border border-[#F4F4E8]/30 text-[#F4F4E8] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#F4F4E8]/10 transition-colors">
-                                                Edit
-                                            </button>
+                                                <div className="grid grid-cols-2 gap-4 border-t border-[#F4F4E8]/10 pt-4 mb-6">
+                                                    <div>
+                                                        <p className="text-[8px] font-bold uppercase text-[#85BB65]">Pemasukan</p>
+                                                        <p className="text-xs font-bold text-white">{wallet.lastIn}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[8px] font-bold uppercase text-red-400">Pengeluaran</p>
+                                                        <p className="text-xs font-bold text-white">{wallet.lastOut}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex gap-2">
+                                                    <button className="flex-1 py-2 bg-[#F4F4E8] text-[#1B3022] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#85BB65] transition-colors">
+                                                        Lihat Riwayat
+                                                    </button>
+                                                    <button className="px-4 py-2 bg-transparent border border-[#F4F4E8]/30 text-[#F4F4E8] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#F4F4E8]/10 transition-colors">
+                                                        Edit
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </section>
 
