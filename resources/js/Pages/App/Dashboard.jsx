@@ -223,35 +223,35 @@ export default function Dashboard() {
 
     const AISummaryCard = () => {
         return (
-            <div className={`transition-all duration-500 ease-in-out bg-slate-100/30 dark:bg-[#0D1A12] rounded-3xl overflow-hidden ${isOpen ? 'max-h-[1000px] p-6 border-2 border-[#2D5A27]' : 'p-4 max-h-[80px] border border-[#2D5A27]/30'}`}>
+            <div className={`transition-all duration-500 ease-in-out bg-slate-100/30 dark:bg-[#0D1A12] rounded-3xl overflow-hidden ${isOpen ? 'max-h-[1000px] p-4 md:p-6 border-2 border-[#2D5A27]' : 'p-5 max-h-[80px] border border-[#2D5A27]/30'}`}>
                 
                 {/* --- HEADER (Selalu Muncul & Menjadi Trigger Toggle) --- */}
                 <div 
                     className="flex items-center justify-between cursor-pointer" 
                     onClick={() => setIsOpen(!isOpen)}
                 >
-                    <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform duration-500 ${isOpen ? 'bg-[#2D5A27] rotate-180' : 'bg-[#1B3022]'}`}>
+                    <div className="flex items-center gap-2 md:gap-4">
+                        <div className={`w-8 md:w-10 h-8 md:h-10 rounded-full flex items-center justify-center shadow-lg transition-transform duration-500 ${isOpen ? 'bg-[#2D5A27] rotate-180' : 'bg-[#1B3022]'}`}>
                             <Sparkles className="text-white w-4 h-4" />
                         </div>
                         <div>
                             <h3 className="text-sm font-black text-[#2D5A27] dark:text-[#85BB65] uppercase tracking-tighter">
                                 AI Financial Intelligence
                             </h3>
-                            <p className="text-[10px] font-bold text-[#4A5D50]/60 uppercase tracking-widest">
-                                {isOpen ? 'Detailed Analysis Active' : 'Status: Keuangan Sangat Sehat • Klik untuk Detail'}
+                            <p className="text-[7px] md:text-[10px] font-bold text-[#4A5D50]/60 uppercase tracking-widest">
+                                {isOpen ? 'Deflex items-center gap-4tailed Analysis Active' : 'Status: Keuangan Sangat Sehat • Klik untuk Detail'}
                             </p>
                         </div>
                     </div>
 
                     <button className="p-2 rounded-full bg-[#2D5A27]/10 text-[#2D5A27]">
-                        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                        {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </button>
                 </div>
 
                 {/* --- COLLAPSIBLE CONTENT (Detail yang Sekarang) --- */}
                 <div className={`mt-8 transition-opacity duration-700 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
                         {/* Insight 1: Pengeluaran Terbesar */}
                         <div className="p-4 rounded-2xl border-2 border-[#8B2E2E]/20 bg-white/50 dark:bg-white/5">
                             <p className="text-[9px] font-black text-[#8B2E2E] uppercase tracking-widest mb-1">Puncak Pengeluaran</p>
@@ -327,14 +327,14 @@ export default function Dashboard() {
                     <AISummaryCard/>
 
                     {/* --- STATS SECTION: KONSOLIDASI --- */}
-                    <section className="grid grid-cols-3 gap-4 md:gap-6">
+                    <section className="grid grid-cols-4 md:grid-cols-3 gap-4 md:gap-6">
                         {stats.map((stat) => (
-                            <div key={stat.name} className={`overflow-hidden ${stat.bg} dark:bg-[#2D5A27]/40 shadow-sm rounded-3xl border-2 ${stat.border} dark:border-[#2D5A27]/30 transition-all hover:scale-[1.02] duration-300`}>
+                            <div key={stat.name} className={`overflow-hidden ${stat.name === 'Total Saldo Global' ? 'col-span-4 md:col-span-1' : 'col-span-2 md:col-span-1'} ${stat.bg} dark:bg-[#2D5A27]/40 shadow-sm rounded-2xl border-2 ${stat.border} dark:border-[#2D5A27]/30 transition-all hover:scale-[1.02] duration-300`}>
                                 <div className="p-6">
                                     <p className="text-[7px] md:text-[10px] font-black text-[#4A5D50] dark:text-[#85BB65]/60 uppercase tracking-[0.2em]">
                                         {stat.name}
                                     </p>
-                                    <p className={`mt-2 text-base lg:text-3xl font-black tracking-tighter ${stat.color}`}>
+                                    <p className={`mt-2 text-base font-[900] lg:text-3xl tracking-tighter ${stat.color}`}>
                                         {stat.value}
                                     </p>
                                     <div className="mt-2 flex items-center gap-1">
@@ -424,7 +424,7 @@ export default function Dashboard() {
                             <div className="p-5 relative z-10">
                                 <div className="flex items-center justify-between mb-4 border-b border-[#2D5A27] pb-3">
                                     <div>
-                                        <h3 className="text-lg font-black text-[#2D5A27] dark:text-[#85BB65] uppercase tracking-[0.2em] leading-none">
+                                        <h3 className="text-sm md:text-lg font-black text-[#2D5A27] dark:text-[#85BB65] uppercase md:tracking-[0.2em] leading-none">
                                             Riwayat Transaksi
                                         </h3>
                                     </div>
@@ -433,56 +433,63 @@ export default function Dashboard() {
                                     </button>
                                 </div>
                                 
-                                <div className="space-y-2">
+                                <div className="space-y-3">
                                     {transactions.slice(0, 5).map((trx) => (
                                         <div 
                                             key={trx.id} 
-                                            className="group flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-xl border border-[#D1D1C2] dark:border-[#2D5A27]/40 bg-white/50 dark:bg-[#15261C]/30 hover:bg-[#2D5A27]/5 dark:hover:bg-[#2D5A27]/20 transition-all"
+                                            className="group relative flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 sm:p-5 rounded-2xl border border-[#D1D1C2] dark:border-[#2D5A27]/30 bg-white/60 dark:bg-[#15261C]/40 hover:shadow-lg hover:shadow-[#2D5A27]/5 transition-all duration-300"
                                         >
-                                            {/* Kiri: Metadata & Stamp Style */}
-                                            <div className="flex flex-col gap-1">
-                                                <div className="flex items-center gap-3">
-                                                    {/* Stamp-like Type Indicator */}
-                                                    <div className={`flex items-center justify-center w-8 h-8 rounded-full border font-black text-[9px] uppercase shadow-sm
-                                                        ${trx.type === 'masuk' 
-                                                            ? 'border-[#2D5A27] text-[#2D5A27] bg-[#E8F0E7]' 
-                                                            : 'border-[#8B2E2E] text-[#8B2E2E] bg-[#FCEAEA]'}`}>
-                                                        {trx.type === 'masuk' ? 'IN' : 'OUT'}
-                                                    </div>
+                                            {/* Bagian Kiri: Icon & Informasi Utama */}
+                                            <div className="flex items-start gap-4">
+                                                {/* Status Indicator - Tetap konsisten ukurannya */}
+                                                <div className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 font-black text-[10px] shadow-sm transition-transform group-hover:scale-110
+                                                    ${trx.type === 'masuk' 
+                                                        ? 'border-[#2D5A27] text-[#2D5A27] bg-[#E8F0E7] dark:bg-[#2D5A27]/20 dark:text-[#85BB65]' 
+                                                        : 'border-[#8B2E2E] text-[#8B2E2E] bg-[#FCEAEA] dark:bg-[#8B2E2E]/20 dark:text-red-400'}`}>
+                                                    {trx.type === 'masuk' ? 'IN' : 'OUT'}
+                                                </div>
+                                                
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="font-black text-[#2D5A27] dark:text-[#F4F4E8] text-sm sm:text-base leading-tight truncate uppercase tracking-tight">
+                                                        {trx.description}
+                                                    </p>
                                                     
-                                                    <div>
-                                                        <p className="font-black text-[#2D5A27] dark:text-white text-xxs leading-none tracking-tight">
-                                                            {trx.description}
-                                                        </p>
-                                                        <div className="flex items-center gap-1 mt-1">
-                                                            <span className="text-[10px] font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/60 uppercase tracking-tighter flex items-center">
-                                                                <Calendar size={8} className="inline-block mr-1" />
-                                                                {trx.date}
-                                                            </span>
-                                                            <Dot size={8} className="text-[#4A5D50]/60 dark:text-[#85BB65]/60" />
-                                                            <span className="text-[10px] font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/60 uppercase tracking-tighter flex items-center">
-                                                                <Tag size={8} className="inline-block mr-1" />
-                                                                {trx.category}
-                                                            </span> 
-                                                            <Dot size={8} className="text-[#4A5D50]/60 dark:text-[#85BB65]/60" />
-                                                            <span className="text-[10px] font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/60 uppercase tracking-tighter flex items-center">
-                                                                <Wallet size={8} className="inline-block mr-1" />
-                                                                {trx.wallet}
-                                                            </span>
-
-                                                        </div>
+                                                    {/* Metadata: Flex wrap agar tidak terpotong di layar kecil */}
+                                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5">
+                                                        <span className="text-[10px] font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/60 uppercase tracking-widest flex items-center shrink-0">
+                                                            <Calendar size={10} className="mr-1" />
+                                                            {trx.date}
+                                                        </span>
+                                                        <span className="hidden sm:block w-1 h-1 rounded-full bg-[#4A5D50]/20 dark:bg-[#85BB65]/20" />
+                                                        <span className="text-[10px] font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/60 uppercase tracking-widest flex items-center shrink-0">
+                                                            <Tag size={10} className="mr-1" />
+                                                            {trx.category}
+                                                        </span> 
+                                                        <span className="hidden sm:block w-1 h-1 rounded-full bg-[#4A5D50]/20 dark:bg-[#85BB65]/20" />
+                                                        <span className="text-[10px] font-bold text-[#4A5D50]/60 dark:text-[#85BB65]/60 uppercase tracking-widest flex items-center shrink-0">
+                                                            <Wallet size={10} className="mr-1" />
+                                                            {trx.wallet}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            {/* Kanan: Nominal (Digital Greenback Style) */}
-                                            <div className="flex flex-col items-end pt-4 sm:pt-0 sm:pl-8">
-                                                <p className={`font-black text-lg tracking-tighter font-mono ${trx.type === 'masuk' ? 'text-[#2D5A27]' : 'text-[#8B2E2E]'}`}>
-                                                    {trx.type === 'masuk' ? '+Rp' : '-Rp'}{trx.amount}
-                                                </p>
-                                                <p className="text-[10px] font-bold text-[#4A5D50]/40 dark:text-[#85BB65]/30 flex items-center">
-                                                    <User2 size={8} className="inline-block mr-1" />{trx.userName}
-                                                </p>
+                                            {/* Bagian Kanan: Nominal & User */}
+                                            <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between mt-4 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-[#D1D1C2]/30 dark:border-[#2D5A27]/20">
+                                                <div className="sm:hidden flex items-center text-[10px] font-bold text-[#4A5D50]/40 dark:text-[#85BB65]/40 uppercase italic">
+                                                    <User2 size={10} className="mr-1" />
+                                                    {trx.userName}
+                                                </div>
+
+                                                <div className="text-right">
+                                                    <p className={`font-black text-lg sm:text-xl tracking-tighter tabular-nums ${trx.type === 'masuk' ? 'text-[#2D5A27] dark:text-[#85BB65]' : 'text-[#8B2E2E] dark:text-red-400'}`}>
+                                                        {trx.type === 'masuk' ? '+' : '-'}{formatIDR(parseCurrency(trx.amount))}
+                                                    </p>
+                                                    <p className="hidden sm:flex items-center justify-end text-[9px] font-black text-[#4A5D50]/40 dark:text-[#85BB65]/30 uppercase tracking-widest mt-0.5">
+                                                        <User2 size={8} className="mr-1" />
+                                                        BY {trx.userName}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     ))}
