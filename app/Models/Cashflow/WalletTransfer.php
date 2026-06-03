@@ -79,4 +79,28 @@ class WalletTransfer extends BaseModel
             'updated_by'
         );
     }
+
+    public function expenseTransaction(): BelongsTo
+    {
+        return $this->belongsTo(
+            Transaction::class,
+            'expense_transaction_id'
+        );
+    }
+
+    public function incomeTransaction(): BelongsTo
+    {
+        return $this->belongsTo(
+            Transaction::class,
+            'income_transaction_id'
+        );
+    }
+
+    public function feeTransaction(): BelongsTo
+    {
+        return $this->belongsTo(
+            Transaction::class,
+            'fee_transaction_id'
+        );
+    }
 }

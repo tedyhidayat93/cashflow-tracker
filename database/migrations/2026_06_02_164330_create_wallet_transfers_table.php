@@ -75,6 +75,27 @@ return new class extends Migration
             $table->json('metadata')
                 ->nullable();
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | Additional Fields for Linking to Transactions
+            |--------------------------------------------------------------------------
+            */
+            $table->foreignId('expense_transaction_id')
+                ->nullable()
+                ->constrained('cf_transactions')
+                ->nullOnDelete();
+
+            $table->foreignId('income_transaction_id')
+                ->nullable()
+                ->constrained('cf_transactions')
+                ->nullOnDelete();
+
+            $table->foreignId('fee_transaction_id')
+                ->nullable()
+                ->constrained('cf_transactions')
+                ->nullOnDelete();
+
             /*
             |--------------------------------------------------------------------------
             | Audit
