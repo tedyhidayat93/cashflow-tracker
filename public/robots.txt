@@ -1,2 +1,21 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap
+Sitemap: https://alumodasinergi.com/sitemap.xml
+
+# Disallow specific paths if any
+Disallow: /cpanel/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_ignition/
+Disallow: /telescope/
+
+# Allow specific assets
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /assets/
+
+# Crawl delay (optional)
+Crawl-delay: 1

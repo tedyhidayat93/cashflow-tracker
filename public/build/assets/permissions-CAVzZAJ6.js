@@ -1,0 +1,1 @@
+const a=[{value:"web",label:"Web"},{value:"api",label:"API"}],e=[{value:"dashboard",label:"Dashboard"},{value:"crm",label:"CRM (Customer Relationship Management)"},{value:"cms",label:"CMS (Content Management System)"},{value:"authorization",label:"Authorization"},{value:"settings",label:"Settings"}];export{a as G,e as P};

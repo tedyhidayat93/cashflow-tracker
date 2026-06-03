@@ -1,0 +1,1 @@
+async function n(t){return new Promise((c,e)=>{if(!window.grecaptcha){e("Recaptcha not loaded");return}window.grecaptcha.ready(async()=>{try{const a=await window.grecaptcha.execute("6Le3JtwsAAAAAPn1llIPwGrxVnsf_1tBkGITvPsr",{action:t});c(a)}catch(a){e(a)}})})}export{n as g};
