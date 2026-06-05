@@ -9,6 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cf_recurring_transactions', function (Blueprint $table) {
+
             $table->id();
 
             /*
@@ -43,6 +44,14 @@ return new class extends Migration
                 'expense',
             ]);
 
+            $table->enum('transaction_status', [
+                'draft',
+                'posted',
+            ])->default('posted');
+
+            $table->string('reference_number')
+                ->nullable();
+
             $table->string('title');
 
             $table->decimal('amount', 18, 2);
@@ -64,18 +73,18 @@ return new class extends Migration
 
             /*
             |--------------------------------------------------------------------------
-            | Monthly
-            |--------------------------------------------------------------------------
-            */
-            $table->unsignedTinyInteger('day_of_month')
-                ->nullable();
-
-            /*
-            |--------------------------------------------------------------------------
             | Weekly
             |--------------------------------------------------------------------------
             */
             $table->unsignedTinyInteger('day_of_week')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Monthly
+            |--------------------------------------------------------------------------
+            */
+            $table->unsignedTinyInteger('day_of_month')
                 ->nullable();
 
             /*
@@ -93,19 +102,34 @@ return new class extends Migration
             | Execution
             |--------------------------------------------------------------------------
             */
-            $table->date('last_executed_at')
+            $table->timestamp('last_executed_at')
                 ->nullable();
 
-            $table->date('next_execution_at')
+            $table->timestamp('next_execution_at')
                 ->nullable();
 
             /*
             |--------------------------------------------------------------------------
-            | Settings
+            | Occurrences
             |--------------------------------------------------------------------------
             */
-            $table->boolean('is_active')
-                ->default(true);
+            $table->unsignedInteger('max_occurrences')
+                ->nullable();
+
+            $table->unsignedInteger('occurrences_count')
+                ->default(0);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Status
+            |--------------------------------------------------------------------------
+            */
+            $table->enum('status', [
+                'active',
+                'paused',
+                'completed',
+                'cancelled',
+            ])->default('active');
 
             /*
             |--------------------------------------------------------------------------
@@ -130,6 +154,11 @@ return new class extends Migration
                 ->constrained('users')
                 ->nullOnDelete();
 
+            $table->foreignId('deleted_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
 
@@ -141,14 +170,20 @@ return new class extends Migration
             $table->index('workspace_id');
             $table->index('wallet_id');
             $table->index('category_id');
+
+            $table->index('status');
             $table->index('frequency');
+
             $table->index('next_execution_at');
-            $table->index('is_active');
+            $table->index('start_date');
+            $table->index('end_date');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('cf_recurring_transactions');
+        Schema::dropIfExists(
+            'cf_recurring_transactions'
+        );
     }
 };

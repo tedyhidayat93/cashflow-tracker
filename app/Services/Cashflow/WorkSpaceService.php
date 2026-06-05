@@ -198,4 +198,204 @@ class WorkspaceService
 
         $workspace->delete();
     }
+
+    /**
+    * Add member to workspace.
+    */
+    public function addMember(
+        Workspace $workspace,
+        User $user,
+        ?int $roleId = null
+    ): WorkspaceUser {
+
+        return DB::transaction(function () use (
+            $workspace,
+            $user,
+            $roleId
+        ) {
+
+            $exists = WorkspaceUser::query()
+                ->where('workspace_id', $workspace->id)
+                ->where('user_id', $user->id)
+                ->exists();
+
+            if ($exists) {
+                throw ValidationException::withMessages([
+                    'user' => 'User sudah menjadi anggota workspace.'
+                ]);
+            }
+
+            $workspaceUser = WorkspaceUser::create([
+                'workspace_id' => $workspace->id,
+                'user_id' => $user->id,
+                'role_id' => $roleId,
+                'joined_at' => now(),
+                'is_active' => true,
+            ]);
+
+            if ($roleId) {
+
+                $role = Role::findOrFail(
+                    $roleId
+                );
+
+                $user->syncRoles([
+                    $role
+                ]);
+            }
+
+            $this->activityLogService->created(
+                $workspaceUser,
+                sprintf(
+                    '%s bergabung ke workspace %s',
+                    $user->email,
+                    $workspace->name
+                )
+            );
+
+            return $workspaceUser;
+        });
+    }
+
+    /**
+    * Remove member from workspace.
+    */
+    public function removeMember(
+        WorkspaceUser $workspaceUser
+    ): void {
+
+        DB::transaction(function () use (
+            $workspaceUser
+        ) {
+
+            if (
+                $workspaceUser->workspace->owner_id ===
+                $workspaceUser->user_id
+            ) {
+                throw ValidationException::withMessages([
+                    'user' => 'Owner workspace tidak dapat dihapus.'
+                ]);
+            }
+
+            $this->activityLogService->deleted(
+                $workspaceUser,
+                sprintf(
+                    'Menghapus anggota %s dari workspace',
+                    $workspaceUser->user->email
+                )
+            );
+
+            $workspaceUser->delete();
+        });
+    }
+
+    /**
+    * Change member role in workspace.
+    */
+    public function changeMemberRole(
+        WorkspaceUser $workspaceUser,
+        int $roleId
+    ): WorkspaceUser {
+
+        return DB::transaction(function () use (
+            $workspaceUser,
+            $roleId
+        ) {
+
+            $oldRole = $workspaceUser->role?->name;
+
+            $role = Role::findOrFail(
+                $roleId
+            );
+
+            $workspaceUser->update([
+                'role_id' => $role->id,
+            ]);
+
+            $workspaceUser
+                ->user
+                ->syncRoles([
+                    $role
+                ]);
+
+            $this->activityLogService->custom(
+                event: 'workspace.member.role.changed',
+                subject: $workspaceUser,
+                description: sprintf(
+                    'Role anggota diubah dari %s menjadi %s',
+                    $oldRole ?? '-',
+                    $role->name
+                )
+            );
+
+            return $workspaceUser->fresh();
+        });
+    }
+
+    /**
+    * Activate member in workspace.
+    */
+    public function activateMember(
+        WorkspaceUser $workspaceUser
+    ): WorkspaceUser {
+
+        return DB::transaction(function () use (
+            $workspaceUser
+        ) {
+
+            $workspaceUser->update([
+                'is_active' => true,
+            ]);
+
+            $this->activityLogService->custom(
+                event: 'workspace.member.activated',
+                subject: $workspaceUser,
+                description: sprintf(
+                    'Mengaktifkan anggota %s',
+                    $workspaceUser->user->email
+                )
+            );
+
+            return $workspaceUser->fresh();
+        });
+    }
+
+    /**
+    * Deactivate member from workspace.
+    */
+    public function deactivateMember(
+        WorkspaceUser $workspaceUser
+    ): WorkspaceUser {
+
+        return DB::transaction(function () use (
+            $workspaceUser
+        ) {
+
+            if (
+                $workspaceUser->workspace->owner_id ===
+                $workspaceUser->user_id
+            ) {
+                throw ValidationException::withMessages([
+                    'user' => 'Owner workspace tidak dapat dinonaktifkan.'
+                ]);
+            }
+
+            $workspaceUser->update([
+                'is_active' => false,
+            ]);
+
+            $this->activityLogService->custom(
+                event: 'workspace.member.deactivated',
+                subject: $workspaceUser,
+                description: sprintf(
+                    'Menonaktifkan anggota %s',
+                    $workspaceUser->user->email
+                )
+            );
+
+            return $workspaceUser->fresh();
+        });
+    }
+
+    
 }

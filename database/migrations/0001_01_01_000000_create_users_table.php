@@ -14,7 +14,21 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('email')->unique();
+            $table->string('phone', 20)->unique();
+            $table->string('gender')->nullable();
+            $table->string('avatar')->nullable();
+
+            $table->text('address_line')->nullable(); // Untuk jalan, nomor rumah, rt/rw
+            $table->string('city', 100)->nullable();
+            $table->string('region', 100)->nullable();  // Provinsi / Negara Bagian
+            $table->string('country', 100)->nullable(); // Negara (contoh: Indonesia)
+            $table->string('postal_code', 20)->nullable(); // Kode pos jangan dilupakan!
+
+            $table->string('status', 20)->default('pending'); // active, suspended, pending
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

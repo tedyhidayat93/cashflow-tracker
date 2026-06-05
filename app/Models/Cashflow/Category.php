@@ -25,6 +25,8 @@ class Category extends BaseModel
         'icon',
         'color',
         'description',
+        'created_by',
+        'updated_by',
     ];
 
     protected $casts = [

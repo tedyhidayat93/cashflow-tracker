@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryService extends BaseService
 {
+
+    public function getCategoryTree(
+        $workspaceId
+    ){
+        return Category::where('workspace_id', $workspaceId)
+            ->whereNull('parent_id') // Ambil induknya saja dulu
+            ->with('children')       // Otomatis menarik anak-anaknya ke dalam array/object
+            ->orderBy('sort_order')
+            ->get();
+    }
+
     public function create(
         CreateCategoryData $data
     ): Category {
@@ -17,6 +28,7 @@ class CategoryService extends BaseService
 
             $category = Category::create([
                 'name' => $data->name,
+                'parent_id' => $data->parentId,
                 'type' => $data->type,
                 'icon' => $data->icon,
                 'color' => $data->color,
@@ -49,6 +61,7 @@ class CategoryService extends BaseService
 
         $category->update([
             'name' => $data->name,
+            'parent_id' => $data->parentId,
             'type' => $data->type,
             'icon' => $data->icon,
             'color' => $data->color,

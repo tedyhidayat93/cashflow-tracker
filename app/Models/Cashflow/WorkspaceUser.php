@@ -57,4 +57,11 @@ class WorkspaceUser extends Model
             'invited_by'
         );
     }
+
+    public function role()
+    {
+        return $this->belongsTo(
+            Role::class
+        );
+    }
 }
