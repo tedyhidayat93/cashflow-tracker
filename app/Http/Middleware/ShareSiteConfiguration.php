@@ -24,21 +24,17 @@ class ShareSiteConfiguration
             ->get()
             ->map(function ($config) {
                 return [
-                    'id' => $config->id,
+                    // 'id' => $config->id,
                     'key' => $config->key,
                     'value' => $config->value,
-                    'type' => $config->type,
-                    'label' => $config->label,
-                    'description' => $config->description,
-                    'group' => $config->group,
+                    // 'type' => $config->type,
+                    // 'label' => $config->label,
+                    // 'description' => $config->description,
+                    // 'group' => $config->group,
                 ];
             });
         
-        // Also share as simple key-value for backward compatibility
-        $siteconfigSimple = Configuration::pluck('value', 'key');
-        
         Inertia::share('siteconfig', $siteconfig);
-        Inertia::share('siteconfig_simple', $siteconfigSimple);
         View::share('siteconfig', $siteconfig);
 
         return $next($request);
