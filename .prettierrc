@@ -1,0 +1,36 @@
+{
+    "semi": true,
+    "singleQuote": true,
+    "singleAttributePerLine": false,
+    "htmlWhitespaceSensitivity": "css",
+    "printWidth": 100,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "arrowParens": "always",
+    "endOfLine": "auto",
+    "plugins": [
+        "prettier-plugin-organize-imports",
+        "prettier-plugin-tailwindcss"
+    ],
+    "tailwindFunctions": ["clsx", "cn"],
+    "tailwindConfig": "./tailwind.config.js",
+    "tailwindAttributes": ["className"],
+    "tabWidth": 2,
+    "useTabs": false,
+    "overrides": [
+        {
+            "files": "*.php",
+            "options": {
+                "printWidth": 120,
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": "**/*.yml",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

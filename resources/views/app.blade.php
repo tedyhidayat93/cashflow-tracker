@@ -1,22 +1,68 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    @class([
+        'dark' => ($appearance ?? 'light') === 'dark',
+    ])
+>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+<head>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    {{-- BASIC --}}
+    <meta charset="utf-8">
 
-        <!-- Scripts -->
-        @routes
-        @viteReactRefresh
-        @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
-        @inertiaHead
-    </head>
-    <body class="font-sans antialiased">
-        @inertia
-    </body>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    {{-- DARK MODE --}}
+    <script>
+        (() => {
+
+            const appearance =
+                '{{ $appearance ?? "system" }}';
+
+            if (appearance !== 'system') {
+                return;
+            }
+
+            const prefersDark =
+                window.matchMedia(
+                    '(prefers-color-scheme: dark)'
+                ).matches;
+
+            if (prefersDark) {
+
+                document.documentElement
+                    .classList
+                    .add('dark');
+            }
+
+        })();
+    </script>
+
+    {{-- CSRF --}}
+    @csrf
+
+    {{-- VITE --}}
+    @viteReactRefresh
+
+    @vite([
+        'resources/js/app.tsx',
+        "resources/js/pages/{$page['component']}.tsx"
+    ])
+
+    {{-- INERTIA --}}
+    @inertiaHead
+
+
+</head>
+
+<body class="font-sans antialiased">
+
+    @inertia
+
+</body>
+
 </html>

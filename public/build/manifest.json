@@ -1,0 +1,872 @@
+{
+  "__lib-Boh1_kMX.js": {
+    "file": "assets/_lib-Boh1_kMX.js",
+    "name": "_lib"
+  },
+  "_app-layout-N0aeJi-d.js": {
+    "file": "assets/app-layout-N0aeJi-d.js",
+    "name": "app-layout",
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js"
+    ]
+  },
+  "_app-sidebar-DLl-JyNW.js": {
+    "file": "assets/app-sidebar-DLl-JyNW.js",
+    "name": "app-sidebar",
+    "imports": [
+      "resources/js/app.tsx",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ]
+  },
+  "_auth-layout-CzYQfEwi.js": {
+    "file": "assets/auth-layout-CzYQfEwi.js",
+    "name": "auth-layout",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
+  },
+  "_button-DP0PxD_6.js": {
+    "file": "assets/button-DP0PxD_6.js",
+    "name": "button",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
+  },
+  "_createLucideIcon-BXt6pPlg.js": {
+    "file": "assets/createLucideIcon-BXt6pPlg.js",
+    "name": "createLucideIcon",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
+  },
+  "_dialog-Di3bZROz.js": {
+    "file": "assets/dialog-Di3bZROz.js",
+    "name": "dialog",
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js"
+    ]
+  },
+  "_house-BEr-HIHs.js": {
+    "file": "assets/house-BEr-HIHs.js",
+    "name": "house",
+    "imports": [
+      "_createLucideIcon-BXt6pPlg.js"
+    ]
+  },
+  "_index-B4mel-oh.js": {
+    "file": "assets/index-B4mel-oh.js",
+    "name": "index",
+    "imports": [
+      "resources/js/app.tsx",
+      "_button-DP0PxD_6.js"
+    ]
+  },
+  "_index-BzE8tAUz.js": {
+    "file": "assets/index-BzE8tAUz.js",
+    "name": "index",
+    "imports": [
+      "_auth-layout-CzYQfEwi.js"
+    ]
+  },
+  "_index-J1Vldvi8.js": {
+    "file": "assets/index-J1Vldvi8.js",
+    "name": "index",
+    "imports": [
+      "_createLucideIcon-BXt6pPlg.js",
+      "resources/js/app.tsx",
+      "_button-DP0PxD_6.js"
+    ]
+  },
+  "_index-tlG_i9UM.js": {
+    "file": "assets/index-tlG_i9UM.js",
+    "name": "index",
+    "imports": [
+      "_auth-layout-CzYQfEwi.js",
+      "_index-BzE8tAUz.js"
+    ]
+  },
+  "_input-error-dU8cXWoR.js": {
+    "file": "assets/input-error-dU8cXWoR.js",
+    "name": "input-error",
+    "imports": [
+      "resources/js/app.tsx",
+      "_utils-Co7Iyp_6.js"
+    ]
+  },
+  "_input-hM3D4B7y.js": {
+    "file": "assets/input-hM3D4B7y.js",
+    "name": "input",
+    "imports": [
+      "resources/js/app.tsx",
+      "_button-DP0PxD_6.js"
+    ]
+  },
+  "_label-llDZAJoK.js": {
+    "file": "assets/label-llDZAJoK.js",
+    "name": "label",
+    "imports": [
+      "resources/js/app.tsx",
+      "_button-DP0PxD_6.js",
+      "_index-B4mel-oh.js"
+    ]
+  },
+  "_loader-circle-DxDm0Zqz.js": {
+    "file": "assets/loader-circle-DxDm0Zqz.js",
+    "name": "loader-circle",
+    "imports": [
+      "_createLucideIcon-BXt6pPlg.js"
+    ]
+  },
+  "_minus-p9uVPKYa.js": {
+    "file": "assets/minus-p9uVPKYa.js",
+    "name": "minus",
+    "imports": [
+      "_createLucideIcon-BXt6pPlg.js"
+    ]
+  },
+  "_spinner-BDpqhFRT.js": {
+    "file": "assets/spinner-BDpqhFRT.js",
+    "name": "spinner",
+    "imports": [
+      "resources/js/app.tsx",
+      "_utils-Co7Iyp_6.js",
+      "_loader-circle-DxDm0Zqz.js"
+    ]
+  },
+  "_utils-Co7Iyp_6.js": {
+    "file": "assets/utils-Co7Iyp_6.js",
+    "name": "utils",
+    "imports": [
+      "_button-DP0PxD_6.js"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-BuZGBLWL.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/app.tsx": {
+    "file": "assets/app-pPC_axxY.js",
+    "name": "app",
+    "src": "resources/js/app.tsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/pages/_superadmin/dashboard.tsx",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-form.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-table.tsx",
+      "resources/js/pages/apps/cashflow/accounts/index.tsx",
+      "resources/js/pages/apps/cashflow/categories/index.tsx",
+      "resources/js/pages/apps/cashflow/dashboard/index.tsx",
+      "resources/js/pages/apps/cashflow/expense/create.tsx",
+      "resources/js/pages/apps/cashflow/expense/edit.tsx",
+      "resources/js/pages/apps/cashflow/expense/index.tsx",
+      "resources/js/pages/apps/cashflow/income/create.tsx",
+      "resources/js/pages/apps/cashflow/income/edit.tsx",
+      "resources/js/pages/apps/cashflow/income/index.tsx",
+      "resources/js/pages/apps/cashflow/reports/index.tsx",
+      "resources/js/pages/apps/cashflow/settings/index.tsx",
+      "resources/js/pages/apps/cashflow/transactions/index.tsx",
+      "resources/js/pages/apps/cashflow/transactions/show.tsx",
+      "resources/js/pages/apps/cashflow/transfers/index.tsx",
+      "resources/js/pages/auth/confirm-password.tsx",
+      "resources/js/pages/auth/forgot-password.tsx",
+      "resources/js/pages/auth/login.tsx",
+      "resources/js/pages/auth/register.tsx",
+      "resources/js/pages/auth/reset-password.tsx",
+      "resources/js/pages/auth/two-factor-challenge.tsx",
+      "resources/js/pages/auth/verify-email.tsx",
+      "resources/js/pages/dashboard.tsx",
+      "resources/js/pages/public/homepage.tsx",
+      "resources/js/pages/user/overview/index.tsx"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/_superadmin/dashboard.tsx": {
+    "file": "assets/dashboard-B8IMXVV0.js",
+    "name": "dashboard",
+    "src": "resources/js/pages/_superadmin/dashboard.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/_components/flash-banner.tsx": {
+    "file": "assets/flash-banner-D53TSi7e.js",
+    "name": "flash-banner",
+    "src": "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/_components/page-header.tsx": {
+    "file": "assets/page-header-C6Hi4xMx.js",
+    "name": "page-header",
+    "src": "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/_components/pagination-links.tsx": {
+    "file": "assets/pagination-links-CNWcK5wU.js",
+    "name": "pagination-links",
+    "src": "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "__lib-Boh1_kMX.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/_components/transaction-form.tsx": {
+    "file": "assets/transaction-form-gO5WllcU.js",
+    "name": "transaction-form",
+    "src": "resources/js/pages/apps/cashflow/_components/transaction-form.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_button-DP0PxD_6.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/_components/transaction-table.tsx": {
+    "file": "assets/transaction-table-Bfc_KG3a.js",
+    "name": "transaction-table",
+    "src": "resources/js/pages/apps/cashflow/_components/transaction-table.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "__lib-Boh1_kMX.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/accounts/index.tsx": {
+    "file": "assets/index-hNbl8g7N.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/accounts/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_dialog-Di3bZROz.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/categories/index.tsx": {
+    "file": "assets/index-QFuxS8oh.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/categories/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_dialog-Di3bZROz.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/dashboard/index.tsx": {
+    "file": "assets/index-BDjMJCMn.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/dashboard/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_dialog-Di3bZROz.js",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/expense/create.tsx": {
+    "file": "assets/create-CYNR8Y5a.js",
+    "name": "create",
+    "src": "resources/js/pages/apps/cashflow/expense/create.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-form.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/expense/edit.tsx": {
+    "file": "assets/edit-BZKbn2gf.js",
+    "name": "edit",
+    "src": "resources/js/pages/apps/cashflow/expense/edit.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-form.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/expense/index.tsx": {
+    "file": "assets/index-DeZVH7cE.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/expense/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_input-hM3D4B7y.js",
+      "_button-DP0PxD_6.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-table.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/income/create.tsx": {
+    "file": "assets/create-zl3outg0.js",
+    "name": "create",
+    "src": "resources/js/pages/apps/cashflow/income/create.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-form.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/income/edit.tsx": {
+    "file": "assets/edit-Byi506we.js",
+    "name": "edit",
+    "src": "resources/js/pages/apps/cashflow/income/edit.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-form.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/income/index.tsx": {
+    "file": "assets/index-CHydrpGG.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/income/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_input-hM3D4B7y.js",
+      "_button-DP0PxD_6.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-table.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/reports/index.tsx": {
+    "file": "assets/index-BCPFXzKH.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/reports/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_index-B4mel-oh.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/settings/index.tsx": {
+    "file": "assets/index-CuVng9JE.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/settings/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/transactions/index.tsx": {
+    "file": "assets/index-B67uk2OX.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/transactions/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_input-hM3D4B7y.js",
+      "_button-DP0PxD_6.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+      "resources/js/pages/apps/cashflow/_components/transaction-table.tsx",
+      "_label-llDZAJoK.js",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/transactions/show.tsx": {
+    "file": "assets/show-Bsx7mnBW.js",
+    "name": "show",
+    "src": "resources/js/pages/apps/cashflow/transactions/show.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_button-DP0PxD_6.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/apps/cashflow/transfers/index.tsx": {
+    "file": "assets/index-B083thJG.js",
+    "name": "index",
+    "src": "resources/js/pages/apps/cashflow/transfers/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-layout-N0aeJi-d.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_dialog-Di3bZROz.js",
+      "__lib-Boh1_kMX.js",
+      "resources/js/pages/apps/cashflow/_components/flash-banner.tsx",
+      "resources/js/pages/apps/cashflow/_components/page-header.tsx",
+      "resources/js/pages/apps/cashflow/_components/pagination-links.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/auth/confirm-password.tsx": {
+    "file": "assets/confirm-password-CvIL8VdL.js",
+    "name": "confirm-password",
+    "src": "resources/js/pages/auth/confirm-password.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_input-error-dU8cXWoR.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_spinner-BDpqhFRT.js",
+      "_auth-layout-CzYQfEwi.js",
+      "_index-BzE8tAUz.js",
+      "_utils-Co7Iyp_6.js",
+      "_index-B4mel-oh.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_createLucideIcon-BXt6pPlg.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/auth/forgot-password.tsx": {
+    "file": "assets/forgot-password-zDXQvkRO.js",
+    "name": "forgot-password",
+    "src": "resources/js/pages/auth/forgot-password.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_index-tlG_i9UM.js",
+      "_input-error-dU8cXWoR.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_auth-layout-CzYQfEwi.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_index-BzE8tAUz.js",
+      "_utils-Co7Iyp_6.js",
+      "_index-B4mel-oh.js",
+      "_createLucideIcon-BXt6pPlg.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/auth/login.tsx": {
+    "file": "assets/login-Bza3jMFi.js",
+    "name": "login",
+    "src": "resources/js/pages/auth/login.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_input-error-dU8cXWoR.js",
+      "_button-DP0PxD_6.js",
+      "_index-J1Vldvi8.js",
+      "_index-B4mel-oh.js",
+      "_utils-Co7Iyp_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_spinner-BDpqhFRT.js",
+      "_auth-layout-CzYQfEwi.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_loader-circle-DxDm0Zqz.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/auth/register.tsx": {
+    "file": "assets/register-D9ROPPWo.js",
+    "name": "register",
+    "src": "resources/js/pages/auth/register.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_auth-layout-CzYQfEwi.js",
+      "_input-error-dU8cXWoR.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_spinner-BDpqhFRT.js",
+      "_utils-Co7Iyp_6.js",
+      "_index-B4mel-oh.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_createLucideIcon-BXt6pPlg.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/auth/reset-password.tsx": {
+    "file": "assets/reset-password-LBm3lJuI.js",
+    "name": "reset-password",
+    "src": "resources/js/pages/auth/reset-password.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_index-tlG_i9UM.js",
+      "_input-error-dU8cXWoR.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_label-llDZAJoK.js",
+      "_spinner-BDpqhFRT.js",
+      "_auth-layout-CzYQfEwi.js",
+      "_index-BzE8tAUz.js",
+      "_utils-Co7Iyp_6.js",
+      "_index-B4mel-oh.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_createLucideIcon-BXt6pPlg.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/auth/two-factor-challenge.tsx": {
+    "file": "assets/two-factor-challenge-C1HL-LvM.js",
+    "name": "two-factor-challenge",
+    "src": "resources/js/pages/auth/two-factor-challenge.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_input-error-dU8cXWoR.js",
+      "_button-DP0PxD_6.js",
+      "_input-hM3D4B7y.js",
+      "_utils-Co7Iyp_6.js",
+      "_minus-p9uVPKYa.js",
+      "_auth-layout-CzYQfEwi.js",
+      "_createLucideIcon-BXt6pPlg.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/auth/verify-email.tsx": {
+    "file": "assets/verify-email-BpdJn-R0.js",
+    "name": "verify-email",
+    "src": "resources/js/pages/auth/verify-email.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_button-DP0PxD_6.js",
+      "_spinner-BDpqhFRT.js",
+      "_auth-layout-CzYQfEwi.js",
+      "_utils-Co7Iyp_6.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_createLucideIcon-BXt6pPlg.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/dashboard.tsx": {
+    "file": "assets/dashboard-DetyqhzK.js",
+    "name": "dashboard",
+    "src": "resources/js/pages/dashboard.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_app-sidebar-DLl-JyNW.js",
+      "_button-DP0PxD_6.js",
+      "_utils-Co7Iyp_6.js",
+      "_createLucideIcon-BXt6pPlg.js",
+      "_index-J1Vldvi8.js",
+      "_house-BEr-HIHs.js",
+      "_loader-circle-DxDm0Zqz.js",
+      "_minus-p9uVPKYa.js",
+      "_index-B4mel-oh.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/public/homepage.tsx": {
+    "file": "assets/homepage-BdUTYOie.js",
+    "name": "homepage",
+    "src": "resources/js/pages/public/homepage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_house-BEr-HIHs.js",
+      "_createLucideIcon-BXt6pPlg.js"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  },
+  "resources/js/pages/user/overview/index.tsx": {
+    "file": "assets/index-Bri33lgQ.js",
+    "name": "index",
+    "src": "resources/js/pages/user/overview/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx"
+    ],
+    "css": [
+      "assets/app-BuZGBLWL.css"
+    ]
+  }
+}
