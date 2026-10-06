@@ -5,6 +5,7 @@ namespace App\Models\Cashflow;
 use App\Models\User;
 use App\Models\Cashflow\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WalletTransfer extends BaseModel
 {
@@ -48,7 +49,7 @@ class WalletTransfer extends BaseModel
     |--------------------------------------------------------------------------
     */
 
-    public function fromWallet()
+    public function fromWallet(): BelongsTo
     {
         return $this->belongsTo(
             Wallet::class,
@@ -56,7 +57,7 @@ class WalletTransfer extends BaseModel
         );
     }
 
-    public function toWallet()
+    public function toWallet(): BelongsTo
     {
         return $this->belongsTo(
             Wallet::class,
@@ -64,7 +65,7 @@ class WalletTransfer extends BaseModel
         );
     }
 
-    public function creator()
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(
             User::class,
@@ -72,7 +73,7 @@ class WalletTransfer extends BaseModel
         );
     }
 
-    public function updater()
+    public function updater(): BelongsTo
     {
         return $this->belongsTo(
             User::class,

@@ -1,5 +1,4 @@
 // Components
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
@@ -30,9 +29,9 @@ export default function VerifyEmail({ status }: { status?: string }) {
               Resend verification email
             </Button>
 
-            <TextLink href={logout()} className="mx-auto block text-sm">
+            <a href="/logout" className="mx-auto block text-sm">
               Log out
-            </TextLink>
+            </a>
           </>
         )}
       </Form>

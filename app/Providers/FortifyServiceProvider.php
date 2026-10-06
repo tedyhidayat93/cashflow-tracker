@@ -4,19 +4,21 @@ namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
+use App\Helpers\Recaptcha;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
-use App\Models\User;
-use App\Helpers\Recaptcha;
-use Inertia\Inertia;
+use Spatie\Permission\PermissionRegistrar;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -25,7 +27,26 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Bind kustom LoginResponse untuk membedakan redirect setelah login
+        $this->app->singleton(LoginResponseContract::class, function () {
+            return new class implements LoginResponseContract {
+                public function toResponse($request)
+                {
+                    $user = Auth::user();
+
+                    // 1. Jika User adalah Super Admin (Role Global/System)
+                    // Reset context Spatie ke global untuk pengecekan role Super Admin
+                    app(PermissionRegistrar::class)->setPermissionsTeamId(0);
+
+                    if ($user->hasRole('Super Admin')) {
+                        return redirect()->intended(route('cpanel.dashboard'));
+                    }
+
+                    // 2. Untuk User biasa, arahkan ke Overview tempat memilih modul/workspace
+                    return redirect()->intended(route('overview'));
+                }
+            };
+        });
     }
 
     /**
@@ -33,12 +54,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
         $this->configureAuthentication();
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
-     
     }
 
     /**
@@ -56,24 +75,7 @@ class FortifyServiceProvider extends ServiceProvider
             $request->validate([
                 'email' => ['required', 'email'],
                 'password' => ['required'],
-                'recaptcha_token' => ['required'],
             ]);
-
-            /*
-            |--------------------------------------------------------------------------
-            | Verify reCAPTCHA
-            |--------------------------------------------------------------------------
-            */
-            if (!Recaptcha::verify(
-                $request->recaptcha_token,
-                'login',
-                0.5
-            )) {
-
-                throw ValidationException::withMessages([
-                    'email' => 'Verifikasi keamanan gagal.',
-                ]);
-            }
 
             /*
             |--------------------------------------------------------------------------
@@ -84,7 +86,6 @@ class FortifyServiceProvider extends ServiceProvider
                 $request->only('email', 'password'),
                 $request->boolean('remember')
             )) {
-
                 throw ValidationException::withMessages([
                     'email' => __('auth.failed'),
                 ]);

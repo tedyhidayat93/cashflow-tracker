@@ -19,7 +19,7 @@ class TransactionAttachmentService extends BaseService
 
         return DB::transaction(function () use ($data) {
 
-            $transaction = Transaction::workspace()
+            $transaction = Transaction::forWorkspace()
                 ->findOrFail(
                     $data->transactionId
                 );

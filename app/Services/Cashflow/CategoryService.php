@@ -9,13 +9,40 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryService extends BaseService
 {
+    public function paginate(
+        ?string $search = null,
+        ?string $type = null,
+        int $perPage = 20,
+    ) {
+        return Category::forWorkspace()
+            ->with('parent:id,name')
+            ->when($search, fn ($query) => $query->where('name', 'like', "%{$search}%"))
+            ->when($type, fn ($query) => $query->where('type', $type))
+            ->orderBy('type')
+            ->orderBy('name')
+            ->paginate($perPage)
+            ->withQueryString();
+    }
 
-    public function getCategoryTree(
-        $workspaceId
-    ){
+    public function listByType(?string $type = null, bool $activeOnly = true)
+    {
+        return Category::forWorkspace()
+            ->when($type, fn ($query) => $query->where('type', $type))
+            ->when($activeOnly, fn ($query) => $query->where('is_active', true))
+            ->orderBy('name')
+            ->get(['id', 'name', 'type', 'parent_id', 'icon', 'color']);
+    }
+
+    public function findOrFail(int $id): Category
+    {
+        return Category::forWorkspace()->findOrFail($id);
+    }
+
+    public function getCategoryTree($workspaceId)
+    {
         return Category::where('workspace_id', $workspaceId)
-            ->whereNull('parent_id') // Ambil induknya saja dulu
-            ->with('children')       // Otomatis menarik anak-anaknya ke dalam array/object
+            ->whereNull('parent_id')
+            ->with('children')
             ->orderBy('sort_order')
             ->get();
     }

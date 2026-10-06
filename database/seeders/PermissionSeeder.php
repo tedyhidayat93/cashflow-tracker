@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AppIdentifier;
+use App\Models\Permission; // Menggunakan Custom Model Permission
 use Illuminate\Database\Seeder;
-use App\Models\Permission;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 class PermissionSeeder extends Seeder
@@ -13,98 +15,89 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
         // Clear existing permissions
         DB::table('permissions')->delete();
 
-        $permissions = [
-            // Dashboard
-            ['name' => 'dashboard-view', 'guard_name' => 'web', 'group_name' => 'dashboard', 'description' => 'Melihat dashboard'],
-            
-            // CRM (Customer Relationship Management)
-            ['name' => 'order-list', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Melihat daftar pesanan'],
-            ['name' => 'order-create', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Membuat pesanan baru'],
-            ['name' => 'order-edit', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Mengedit pesanan'],
-            ['name' => 'order-delete', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Menghapus pesanan'],
-            
-            ['name' => 'customer-list', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Melihat daftar pelanggan'],
-            ['name' => 'customer-create', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Membuat pelanggan baru'],
-            ['name' => 'customer-edit', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Mengedit pelanggan'],
-            ['name' => 'customer-delete', 'guard_name' => 'web', 'group_name' => 'crm', 'description' => 'Menghapus pelanggan'],
-            
-            // CMS (Content Management System)
-            ['name' => 'article-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar artikel'],
-            ['name' => 'article-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat artikel baru'],
-            ['name' => 'article-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit artikel'],
-            ['name' => 'article-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus artikel'],
-            
-            ['name' => 'product-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar produk'],
-            ['name' => 'product-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat produk baru'],
-            ['name' => 'product-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit produk'],
-            ['name' => 'product-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus produk'],
-            
-            ['name' => 'client-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar klien'],
-            ['name' => 'client-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat klien baru'],
-            ['name' => 'client-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit klien'],
-            ['name' => 'client-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus klien'],
-            
-            ['name' => 'brand-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar merek'],
-            ['name' => 'brand-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat merek baru'],
-            ['name' => 'brand-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit merek'],
-            ['name' => 'brand-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus merek'],
-            
-            ['name' => 'service-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar layanan'],
-            ['name' => 'service-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat layanan baru'],
-            ['name' => 'service-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit layanan'],
-            ['name' => 'service-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus layanan'],
-            
-            ['name' => 'category-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar kategori'],
-            ['name' => 'category-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat kategori baru'],
-            ['name' => 'category-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit kategori'],
-            ['name' => 'category-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus kategori'],
-            
-            ['name' => 'tag-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar tag'],
-            ['name' => 'tag-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat tag baru'],
-            ['name' => 'tag-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit tag'],
-            ['name' => 'tag-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus tag'],
-            
-            ['name' => 'faq-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar FAQ'],
-            ['name' => 'faq-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat FAQ baru'],
-            ['name' => 'faq-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit FAQ'],
-            ['name' => 'faq-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus FAQ'],
-            
-            ['name' => 'testimonial-list', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Melihat daftar testimonial'],
-            ['name' => 'testimonial-create', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Membuat testimonial baru'],
-            ['name' => 'testimonial-edit', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Mengedit testimonial'],
-            ['name' => 'testimonial-delete', 'guard_name' => 'web', 'group_name' => 'cms', 'description' => 'Menghapus testimonial'],
-            
-            // Authorization Management
-            ['name' => 'user-list', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Melihat daftar user'],
-            ['name' => 'user-create', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Membuat user baru'],
-            ['name' => 'user-edit', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Mengedit user'],
-            ['name' => 'user-delete', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Menghapus user'],
-            
-            ['name' => 'role-list', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Melihat daftar role'],
-            ['name' => 'role-create', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Membuat role baru'],
-            ['name' => 'role-edit', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Mengedit role'],
-            ['name' => 'role-delete', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Menghapus role'],
-            
-            ['name' => 'permission-list', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Melihat daftar permission'],
-            ['name' => 'permission-create', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Membuat permission baru'],
-            ['name' => 'permission-edit', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Mengedit permission'],
-            ['name' => 'permission-delete', 'guard_name' => 'web', 'group_name' => 'authorization', 'description' => 'Menghapus permission'],
-            
-            // Analytics
-            ['name' => 'visitor-log-list', 'guard_name' => 'web', 'group_name' => 'analytics', 'description' => 'Melihat log visitor'],
-            
-            // Settings
-            ['name' => 'setting-configuration-list', 'guard_name' => 'web', 'group_name' => 'settings', 'description' => 'Melihat pengaturan konfigurasi'],
-            ['name' => 'setting-configuration-create', 'guard_name' => 'web', 'group_name' => 'settings', 'description' => 'Menambah pengaturan konfigurasi'],
-            ['name' => 'setting-configuration-edit', 'guard_name' => 'web', 'group_name' => 'settings', 'description' => 'Mengedit pengaturan konfigurasi'],
+        // Mengelompokkan permission berdasarkan grup untuk mengisi group_name dan description otomatis
+        $permissionGroups = [
+            'Dashboard' => [
+                'dashboard-view' => 'Melihat halaman utama dashboard',
+            ],
+            'Workspace Management' => [
+                'workspace-list'   => 'Melihat daftar workspace',
+                'workspace-create' => 'Membuat workspace baru',
+                'workspace-edit'   => 'Mengubah data workspace',
+                'workspace-delete' => 'Menghapus workspace',
+            ],
+            'Workspace Users' => [
+                'workspace-user-list'   => 'Melihat daftar pengguna di workspace',
+                'workspace-user-invite' => 'Mengundang pengguna baru ke workspace',
+                'workspace-user-edit'   => 'Mengubah peran atau izin pengguna workspace',
+                'workspace-user-remove' => 'Mengeluarkan pengguna dari workspace',
+            ],
+            'Wallets' => [
+                'wallet-list'   => 'Melihat daftar dompet/rekening',
+                'wallet-create' => 'Membuat dompet/rekening baru',
+                'wallet-edit'   => 'Mengubah data dompet/rekening',
+                'wallet-delete' => 'Menghapus dompet/rekening',
+            ],
+            'Wallet Transfers' => [
+                'wallet-transfer-list'   => 'Melihat riwayat transfer antar dompet',
+                'wallet-transfer-create' => 'Melakukan transfer antar dompet',
+                'wallet-transfer-detail' => 'Melihat rincian transaksi transfer',
+            ],
+            'Categories' => [
+                'category-list'   => 'Melihat daftar kategori transaksi',
+                'category-create' => 'Membuat kategori transaksi baru',
+                'category-edit'   => 'Mengubah data kategori',
+                'category-delete' => 'Menghapus kategori',
+            ],
+            'Budgets' => [
+                'budget-list'   => 'Melihat daftar anggaran',
+                'budget-create' => 'Membuat anggaran baru',
+                'budget-edit'   => 'Mengubah data anggaran',
+                'budget-delete' => 'Menghapus anggaran',
+            ],
+            'Transactions' => [
+                'transaction-list'   => 'Melihat daftar transaksi',
+                'transaction-create' => 'Mencatat transaksi baru',
+                'transaction-edit'   => 'Mengubah data transaksi',
+                'transaction-delete' => 'Menghapus data transaksi',
+            ],
+            'Recurring Transactions' => [
+                'recurring-transaction-list'   => 'Melihat daftar transaksi berulang',
+                'recurring-transaction-create' => 'Membuat jadwal transaksi berulang',
+                'recurring-transaction-edit'   => 'Mengubah jadwal transaksi berulang',
+                'recurring-transaction-delete' => 'Menghapus jadwal transaksi berulang',
+            ],
+            'Roles & Permissions' => [
+                'role-list'   => 'Melihat daftar peran dan izin',
+                'role-create' => 'Membuat peran baru',
+                'role-edit'   => 'Mengubah peran dan alokasi izin',
+                'role-delete' => 'Menghapus peran',
+            ],
+            'Activity Logs' => [
+                'log-activity-list' => 'Melihat catatan log aktivitas sistem',
+            ],
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::create($permission);
+        foreach ($permissionGroups as $groupName => $permissions) {
+            foreach ($permissions as $name => $description) {
+                Permission::create([
+                    'name'        => $name,
+                    'guard_name'  => 'web',
+                    'type'        => 'system',
+                    'code'        => Str::upper(Str::slug($name, '_')), // Contoh: 'DASHBOARD_VIEW'
+                    'app_prefix'  => AppIdentifier::CASHFLOW,
+                    'group_name'  => $groupName,
+                    'description' => $description,
+                    'is_default'  => false,
+                    'is_active'   => true,
+                ]);
+            }
         }
     }
 }
-    

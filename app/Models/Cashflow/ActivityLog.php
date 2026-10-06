@@ -3,6 +3,7 @@
 namespace App\Models\Cashflow;
 
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Model;
 
 class ActivityLog extends Model

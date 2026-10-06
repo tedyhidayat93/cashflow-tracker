@@ -33,10 +33,10 @@ class RecurringTransactionService extends BaseService
 
         return DB::transaction(function () use ($data) {
 
-            $wallet = Wallet::workspace()
+            $wallet = Wallet::forWorkspace()
                 ->findOrFail($data->walletId);
 
-            $category = Category::workspace()
+            $category = Category::forWorkspace()
                 ->findOrFail($data->categoryId);
 
             $recurring = RecurringTransaction::create([
@@ -94,10 +94,10 @@ class RecurringTransactionService extends BaseService
             $data
         ) {
 
-            $wallet = Wallet::workspace()
+            $wallet = Wallet::forWorkspace()
                 ->findOrFail($data->walletId);
 
-            $category = Category::workspace()
+            $category = Category::forWorkspace()
                 ->findOrFail($data->categoryId);
 
             $oldValues = $recurring->only([

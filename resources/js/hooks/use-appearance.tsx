@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export type Appearance = 'light';
+export type Appearance = 'light' | 'dark' | 'system';
 
 const setCookie = (name: string, value: string, days = 365) => {
   if (typeof document === 'undefined') {
@@ -27,21 +27,27 @@ export function initializeTheme() {
 export function useAppearance() {
   const [appearance, setAppearance] = useState<Appearance>('light');
 
-  const updateAppearance = useCallback(() => {
-    setAppearance('light');
+  const updateAppearance = useCallback((newAppearance: Appearance) => {
+    setAppearance(newAppearance);
 
-    // Simpan light saja
-    localStorage.setItem('appearance', 'light');
+    // Simpan appearance yang dipilih
+    localStorage.setItem('appearance', newAppearance);
 
     // Simpan ke cookie untuk SSR
-    setCookie('appearance', 'light');
+    setCookie('appearance', newAppearance);
 
     applyTheme();
   }, []);
 
   useEffect(() => {
-    updateAppearance();
-  }, [updateAppearance]);
+    const savedAppearance = localStorage.getItem('appearance');
+    if (savedAppearance) {
+      setAppearance(savedAppearance as Appearance);
+    }
+    else {
+      setAppearance('light');
+    }
+  }, []);
 
   return {
     appearance,

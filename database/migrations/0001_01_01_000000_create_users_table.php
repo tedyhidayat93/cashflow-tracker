@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('current_workspace_id')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
-            $table->string('phone', 20)->unique();
-            $table->string('gender')->nullable();
+            $table->string('phone', 20)->unique()->nullable();
+            $table->string('gender')->nullable()->index();
             $table->string('avatar')->nullable();
 
             $table->text('address_line')->nullable(); // Untuk jalan, nomor rumah, rt/rw
@@ -33,6 +34,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -2,14 +2,53 @@
 
 namespace App\Services\Cashflow;
 
-use App\DTOs\Cashflow\ActivityLog\CreateActivityLogData;
 use App\DTOs\Cashflow\Wallet\CreateWalletData;
 use App\DTOs\Cashflow\Wallet\UpdateWalletData;
 use App\Models\Cashflow\Wallet;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class WalletService extends BaseService
 {
+    public function paginate(?string $search = null, int $perPage = 15)
+    {
+        return Wallet::forWorkspace()
+            ->when($search, fn ($query) => $query->where('name', 'like', "%{$search}%"))
+            ->orderBy('name')
+            ->paginate($perPage)
+            ->withQueryString();
+    }
+
+    public function listActive()
+    {
+        return Wallet::forWorkspace()
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get(['id', 'name', 'type', 'current_balance', 'currency']);
+    }
+
+    public function totalBalance(): float
+    {
+        return (float) Wallet::forWorkspace()
+            ->where('is_active', true)
+            ->sum('current_balance');
+    }
+
+    public function findOrFail(int $id): Wallet
+    {
+        return Wallet::forWorkspace()->findOrFail($id);
+    }
+
+    /** Dompet aktif untuk dropdown form. */
+    public function options(?int $workspaceId = null): Collection
+    {
+        return Wallet::query()
+            ->forWorkspace($workspaceId)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get(['id', 'name', 'type', 'currency', 'bank_name', 'current_balance']);
+    }
+
     /**
      * Create wallet.
      */

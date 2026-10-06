@@ -2,80 +2,120 @@
 
 namespace App\Services\Cashflow;
 
-use App\Services\Cashflow\ActivityLogService;
-use App\Services\Cashflow\TransactionAttachmentService;
 use App\DTOs\Cashflow\Transaction\CreateTransactionData;
 use App\DTOs\Cashflow\Transaction\UpdateTransactionData;
+use App\Enums\Cashflow\TransactionType;
+use App\Models\Cashflow\Category;
 use App\Models\Cashflow\Transaction;
 use App\Models\Cashflow\Wallet;
-use App\Models\Cashflow\Category;
-use App\Enums\Cashflow\TransactionType;
-use App\Enums\Cashflow\TransactionStatus;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class TransactionService extends BaseService
 {
-   public function __construct(
+    public function __construct(
         ActivityLogService $activityLogService,
         protected WalletService $walletService,
         protected TransactionAttachmentService $attachmentService,
-        // TODO: protected BudgetService $budgetService,
-
-    )
-    {
-        parent::__construct(
-            $activityLogService
-        );
+    ) {
+        parent::__construct($activityLogService);
     }
 
-    public function create(
-        CreateTransactionData $data
-    ): Transaction {
+    public function paginate(
+        ?TransactionType $type = null,
+        ?string $search = null,
+        ?string $dateFrom = null,
+        ?string $dateTo = null,
+        ?int $walletId = null,
+        ?int $categoryId = null,
+        int $perPage = 15,
+    ): LengthAwarePaginator {
+        return Transaction::forWorkspace()
+            ->with(['wallet:id,name', 'category:id,name,type'])
+            ->when($type, fn ($query) => $query->where('type', $type))
+            ->when($walletId, fn ($query) => $query->where('wallet_id', $walletId))
+            ->when($categoryId, fn ($query) => $query->where('category_id', $categoryId))
+            ->when($search, function ($query, $search) {
+                $query->where(function ($inner) use ($search) {
+                    $inner->where('title', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('reference_number', 'like', "%{$search}%");
+                });
+            })
+            ->when($dateFrom, fn ($query) => $query->whereDate('transaction_date', '>=', $dateFrom))
+            ->when($dateTo, fn ($query) => $query->whereDate('transaction_date', '<=', $dateTo))
+            ->orderByDesc('transaction_date')
+            ->orderByDesc('id')
+            ->paginate($perPage)
+            ->withQueryString()
+            ->through(fn (Transaction $transaction) => $this->present($transaction));
+    }
 
+    public function findOrFail(int $id): Transaction
+    {
+        $transaction = Transaction::forWorkspace()
+            ->with(['wallet', 'category', 'attachments'])
+            ->findOrFail($id);
+
+        $this->ensureWorkspaceOwnership($transaction);
+
+        return $transaction;
+    }
+
+    public function recent(int $limit = 8): array
+    {
+        return Transaction::forWorkspace()
+            ->with(['category:id,name'])
+            ->orderByDesc('transaction_date')
+            ->orderByDesc('id')
+            ->limit($limit)
+            ->get()
+            ->map(fn (Transaction $transaction) => [
+                'id' => $transaction->id,
+                'title' => $transaction->title,
+                'category' => $transaction->category?->name,
+                'amount' => (float) $transaction->amount,
+                'type' => $transaction->type->value,
+                'date' => $transaction->transaction_date?->toDateString(),
+            ])
+            ->all();
+    }
+
+    public function create(CreateTransactionData $data): Transaction
+    {
         return DB::transaction(function () use ($data) {
-
-
-            $wallet = Wallet::workspace()
-                ->lockForUpdate()   
-                ->findOrFail(
-                    $data->walletId
-                );
+            $wallet = Wallet::forWorkspace()
+                ->lockForUpdate()
+                ->findOrFail($data->walletId);
 
             if (
                 $data->type === TransactionType::EXPENSE
                 && $wallet->current_balance < $data->amount
             ) {
                 throw ValidationException::withMessages([
-                    'amount' => 'Saldo wallet tidak mencukupi.'
+                    'amount' => 'Saldo wallet tidak mencukupi.',
                 ]);
             }
 
-            $category = Category::workspace()
-                ->findOrFail($data->categoryId);
+            $category = Category::forWorkspace()->findOrFail($data->categoryId);
+
+            $title = $data->title
+                ?: $data->description
+                ?: sprintf('Transaksi %s', $data->type->label());
 
             $transaction = Transaction::create([
                 'wallet_id' => $wallet->id,
                 'category_id' => $category->id,
-
                 'type' => $data->type,
-                'status' => $data->status,
-
                 'amount' => $data->amount,
-
-                'transaction_date' => $data->transactionDate,
-
+                'title' => $title,
                 'description' => $data->description,
-
-                'reference_no' => $data->referenceNo,
+                'reference_number' => $data->referenceNo,
+                'transaction_date' => $data->transactionDate,
             ]);
 
-            $this->applyTransaction(
-                $wallet,
-                $data->type,
-                $data->status,
-                $data->amount
-            );
+            $this->applyTransaction($wallet, $data->type, $data->amount);
 
             $this->activityLogService->created(
                 $transaction,
@@ -88,107 +128,65 @@ class TransactionService extends BaseService
             );
 
             return $transaction;
-        }); 
+        });
     }
 
-    public function update(
-        Transaction $transaction,
-        UpdateTransactionData $data
-    ): Transaction {
+    public function update(Transaction $transaction, UpdateTransactionData $data): Transaction
+    {
+        return DB::transaction(function () use ($transaction, $data) {
+            $this->ensureWorkspaceOwnership($transaction);
 
-        return DB::transaction(function () use (
-            $transaction,
-            $data
-        ) {
-
-            $this->ensureWorkspaceOwnership(
-                $transaction
-            );
-
-            $wallet = $transaction->wallet;
+            $wallet = Wallet::forWorkspace()
+                ->lockForUpdate()
+                ->findOrFail($transaction->wallet_id);
 
             $oldValues = $transaction->only([
                 'category_id',
                 'type',
-                'status',
                 'amount',
+                'title',
                 'transaction_date',
                 'description',
-                'reference_no',
+                'reference_number',
             ]);
 
-            /*
-            |--------------------------------------------------------------------------
-            | Rollback transaksi lama
-            |--------------------------------------------------------------------------
-            */
-            $this->rollbackTransaction(
-                $transaction
-            );
+            $this->rollbackTransaction($transaction);
 
-            /*
-            |--------------------------------------------------------------------------
-            | Validasi saldo setelah rollback
-            |--------------------------------------------------------------------------
-            */
             if (
-                $data->status === TransactionStatus::POSTED
-                && $data->type === TransactionType::EXPENSE
+                $data->type === TransactionType::EXPENSE
                 && $wallet->fresh()->current_balance < $data->amount
             ) {
                 throw ValidationException::withMessages([
-                    'amount' => 'Saldo wallet tidak mencukupi.'
+                    'amount' => 'Saldo wallet tidak mencukupi.',
                 ]);
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Update transaksi
-            |--------------------------------------------------------------------------
-            */
-            $category = Category::workspace()
-                ->findOrFail($data->categoryId);
+            $category = Category::forWorkspace()->findOrFail($data->categoryId);
+
             $transaction->update([
                 'category_id' => $category->id,
-
                 'type' => $data->type,
-                'status' => $data->status,
-
                 'amount' => $data->amount,
-
+                'title' => $data->title ?: $transaction->title,
                 'transaction_date' => $data->transactionDate,
-
                 'description' => $data->description,
-
-                'reference_no' => $data->referenceNo,
+                'reference_number' => $data->referenceNo,
             ]);
 
-            /*
-            |--------------------------------------------------------------------------
-            | Apply transaksi baru
-            |--------------------------------------------------------------------------
-            */
-            $this->applyTransaction(
-                $wallet->fresh(),
-                $data->type,
-                $data->status,
-                $data->amount
-            );
+            $this->applyTransaction($wallet->fresh(), $data->type, $data->amount);
 
             $this->activityLogService->updated(
                 subject: $transaction,
                 oldValues: $oldValues,
-                newValues: $transaction
-                    ->fresh()
-                    ->only([
-                        'category_id',
-                        'type',
-                        'status',
-                        'amount',
-                        'transaction_date',
-                        'description',
-                        'reference_no',
-                    ]),
+                newValues: $transaction->fresh()->only([
+                    'category_id',
+                    'type',
+                    'amount',
+                    'title',
+                    'transaction_date',
+                    'description',
+                    'reference_number',
+                ]),
                 description: 'Mengubah transaksi'
             );
 
@@ -196,28 +194,15 @@ class TransactionService extends BaseService
         });
     }
 
-    public function delete(
-        Transaction $transaction
-    ): void {
+    public function delete(Transaction $transaction): void
+    {
+        DB::transaction(function () use ($transaction) {
+            $this->ensureWorkspaceOwnership($transaction);
 
-        DB::transaction(function () use (
-            $transaction
-        ) {
+            $this->rollbackTransaction($transaction);
 
-            $this->ensureWorkspaceOwnership(
-                $transaction
-            );
-
-            $this->rollbackTransaction(
-                $transaction
-            );
-
-            foreach (
-                $transaction->attachments as $attachment
-            ) {
-                $this->attachmentService->delete(
-                    $attachment
-                );
+            foreach ($transaction->attachments as $attachment) {
+                $this->attachmentService->delete($attachment);
             }
 
             $this->activityLogService->deleted(
@@ -238,17 +223,10 @@ class TransactionService extends BaseService
         });
     }
 
-    public function restore(
-        Transaction $transaction
-    ): Transaction {
-
-        return DB::transaction(function () use (
-            $transaction
-        ) {
-
-            $this->ensureWorkspaceOwnership(
-                $transaction
-            );
+    public function restore(Transaction $transaction): Transaction
+    {
+        return DB::transaction(function () use ($transaction) {
+            $this->ensureWorkspaceOwnership($transaction);
 
             if (! $transaction->trashed()) {
                 return $transaction;
@@ -259,7 +237,7 @@ class TransactionService extends BaseService
                 && $transaction->wallet->current_balance < $transaction->amount
             ) {
                 throw ValidationException::withMessages([
-                    'amount' => 'Saldo wallet tidak mencukupi untuk restore transaksi.'
+                    'amount' => 'Saldo wallet tidak mencukupi untuk restore transaksi.',
                 ]);
             }
 
@@ -268,8 +246,7 @@ class TransactionService extends BaseService
             $this->applyTransaction(
                 $transaction->wallet,
                 $transaction->type,
-                $transaction->status,
-                $transaction->amount
+                (float) $transaction->amount
             );
 
             $this->activityLogService->custom(
@@ -287,157 +264,59 @@ class TransactionService extends BaseService
         });
     }
 
-    public function changeStatus(
-        Transaction $transaction,
-        TransactionStatus $newStatus
-    ): Transaction {
+    public function present(Transaction $transaction): array
+    {
+        $transaction->loadMissing(['wallet:id,name', 'category:id,name,type']);
 
-        $this->ensureWorkspaceOwnership($transaction);
-
-        return DB::transaction(function () use (
-            $transaction,
-            $newStatus
-        ) {
-
-            $oldStatus = $transaction->status;
-
-            /*
-            |--------------------------------------------------------------------------
-            | Tidak ada perubahan
-            |--------------------------------------------------------------------------
-            */
-            if ($oldStatus === $newStatus) {
-                return $transaction;
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Rollback status lama
-            |--------------------------------------------------------------------------
-            */
-            if (
-                $oldStatus === TransactionStatus::POSTED
-            ) {
-                $this->rollbackTransaction(
-                    $transaction
-                );
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Apply status baru
-            |--------------------------------------------------------------------------
-            */
-            if (
-                $newStatus === TransactionStatus::POSTED
-                && $transaction->type === TransactionType::EXPENSE
-                && $transaction->wallet->fresh()->current_balance < $transaction->amount
-            ) {
-                throw ValidationException::withMessages([
-                    'amount' => 'Saldo wallet tidak mencukupi.'
-                ]);
-            }
-
-            if (
-                $newStatus === TransactionStatus::POSTED
-            ) {
-                $this->applyTransaction(
-                    $transaction->wallet,
-                    $transaction->type,
-                    $newStatus,
-                    $transaction->amount
-                );
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Update status
-            |--------------------------------------------------------------------------
-            */
-            $transaction->update([
-                'status' => $newStatus,
-            ]);
-
-            /*
-            |--------------------------------------------------------------------------
-            | Activity Log
-            |--------------------------------------------------------------------------
-            */
-            $this->activityLogService->custom(
-                event: 'transaction.status.changed',
-                subject: $transaction,
-                description: sprintf(
-                    'Mengubah status transaksi %s dari %s menjadi %s',
-                    $transaction->reference_no ?? "#{$transaction->id}",
-                    $oldStatus->label(),
-                    $newStatus->label()
-                ),
-                properties: [
-                    'old_status' => $oldStatus->value,
-                    'new_status' => $newStatus->value,
-                ]
-            );
-
-            return $transaction->fresh();
-        });
+        return [
+            'id' => $transaction->id,
+            'wallet_id' => $transaction->wallet_id,
+            'category_id' => $transaction->category_id,
+            'title' => $transaction->title,
+            'description' => $transaction->description,
+            'reference_number' => $transaction->reference_number,
+            'amount' => (float) $transaction->amount,
+            'type' => $transaction->type->value,
+            'transaction_date' => $transaction->transaction_date?->toDateString(),
+            'wallet' => $transaction->wallet ? [
+                'id' => $transaction->wallet->id,
+                'name' => $transaction->wallet->name,
+            ] : null,
+            'category' => $transaction->category ? [
+                'id' => $transaction->category->id,
+                'name' => $transaction->category->name,
+                'type' => $transaction->category->type->value,
+            ] : null,
+        ];
     }
 
     private function rollbackTransaction(Transaction $transaction): void
     {
-        if ($transaction->status !== TransactionStatus::POSTED) {
-            return;
-        }
-
         $wallet = $transaction->wallet;
 
         if ($transaction->type === TransactionType::INCOME) {
-            $this->walletService->decrementBalance(
-                $wallet,
-                $transaction->amount
-            );
+            $this->walletService->decrementBalance($wallet, (float) $transaction->amount);
         }
 
         if ($transaction->type === TransactionType::EXPENSE) {
-            $this->walletService->incrementBalance(
-                $wallet,
-                $transaction->amount
-            );
+            $this->walletService->incrementBalance($wallet, (float) $transaction->amount);
         }
     }
 
-    private function applyTransaction(
-        Wallet $wallet,
-        TransactionType $type,
-        TransactionStatus $status,
-        float $amount
-    ): void {
-
-        if ($status !== TransactionStatus::POSTED) {
-            return;
-        }
-
+    private function applyTransaction(Wallet $wallet, TransactionType $type, float $amount): void
+    {
         if ($type === TransactionType::INCOME) {
-            $this->walletService->incrementBalance(
-                $wallet,
-                $amount
-            );
+            $this->walletService->incrementBalance($wallet, $amount);
         }
 
         if ($type === TransactionType::EXPENSE) {
-            $this->walletService->decrementBalance(
-                $wallet,
-                $amount
-            );
+            $this->walletService->decrementBalance($wallet, $amount);
         }
     }
 
-    private function ensureWorkspaceOwnership(
-        Transaction $transaction
-    ): void {
-
-        if (
-            $transaction->workspace_id !== current_workspace_id()
-        ) {
+    private function ensureWorkspaceOwnership(Transaction $transaction): void
+    {
+        if ($transaction->workspace_id !== current_workspace_id()) {
             abort(403);
         }
     }

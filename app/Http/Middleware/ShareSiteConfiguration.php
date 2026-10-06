@@ -18,25 +18,6 @@ class ShareSiteConfiguration
      */
     public function handle(Request $request, Closure $next)
     {
-        // Share site configuration data with all Inertia views
-        $siteconfig = Configuration::orderBy('group')
-            ->orderBy('label')
-            ->get()
-            ->map(function ($config) {
-                return [
-                    // 'id' => $config->id,
-                    'key' => $config->key,
-                    'value' => $config->value,
-                    // 'type' => $config->type,
-                    // 'label' => $config->label,
-                    // 'description' => $config->description,
-                    // 'group' => $config->group,
-                ];
-            });
-        
-        Inertia::share('siteconfig', $siteconfig);
-        View::share('siteconfig', $siteconfig);
-
         return $next($request);
     }
 }   

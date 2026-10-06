@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\Gender;
+use App\Enums\UserStatus;
 
 class User extends Authenticatable
 {
@@ -22,9 +24,20 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'current_workspace_id',
+        'first_name',
+        'last_name',
         'email',
+        'phone',
+        'gender',
+        'avatar',
+        'address_line',
+        'city',
+        'region',
+        'country',
+        'postal_code',
         'password',
-        'is_active',
+        'status',
         'avatar',
         'deleted_at',
     ];
@@ -52,15 +65,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
-            'is_active' => 'boolean',
+            'status' => UserStatus::class,
+            'gender' => Gender::class,
         ];
     }
 
     public function workspaces()
     {
         return $this->belongsToMany(
-            \App\Models\Cashflow\Workspace::class,
-            'cf_workspace_users'
+            \App\Models\Workspace::class,
+            'workspace_users'
         )
         ->withPivot([
             'joined_at',

@@ -5,7 +5,7 @@ namespace App\Services\Cashflow;
 use Throwable;
 use App\Models\User;
 use App\Models\Cashflow\Invitation;
-use App\Models\Cashflow\Workspace;
+use App\Models\Workspace;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;

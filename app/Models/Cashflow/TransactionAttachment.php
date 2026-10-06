@@ -3,6 +3,7 @@
 namespace App\Models\Cashflow;
 
 use App\Models\Cashflow\BaseModel;
+use Illuminate\Support\Facades\Storage;
 
 class TransactionAttachment extends BaseModel
 {

@@ -11,8 +11,8 @@ export default function AppearanceToggleTab({
 
   const tabs: { value: Appearance; icon: LucideIcon; label: string }[] = [
     { value: 'light', icon: Sun, label: 'Light' },
-    // { value: 'dark', icon: Moon, label: 'Dark' },
-    // { value: 'system', icon: Monitor, label: 'System' },
+    { value: 'dark', icon: Moon, label: 'Dark' },
+    { value: 'system', icon: Monitor, label: 'System' },
   ];
 
   return (
@@ -26,8 +26,7 @@ export default function AppearanceToggleTab({
       {tabs.map(({ value, icon: Icon, label }) => (
         <button
           key={value}
-          onClick={() => updateAppearance()}
-          // onClick={() => updateAppearance()}
+          onClick={() => updateAppearance(value)}
           className={cn(
             'flex items-center rounded-md px-3.5 py-1.5 transition-colors',
             appearance === value

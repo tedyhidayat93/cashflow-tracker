@@ -16,7 +16,6 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { useState } from 'react';
-import { generateRecaptcha } from '@/utils/google-recaptcha';
 
 interface LoginProps {
   status?: string;
@@ -46,11 +45,8 @@ export default function Login({
       return;
     }
 
-    const token = await generateRecaptcha('login');
-
     form.transform((data) => ({
       ...data,
-      recaptcha_token: token,
     }));
 
     form.post(store.url(), {
@@ -64,8 +60,8 @@ export default function Login({
 
   return (
     <AuthLayout
-      title="Selamat Datang"
-      description="Masuk ke dashboard untuk mengelola data, pesanan, dan aktivitas bisnis Anda."
+      title="Selamat datang kembali!"
+      description="Silakan Login untuk melanjutkan ke dashboard"
     >
       <Head title="Log in" />
 
@@ -80,14 +76,6 @@ export default function Login({
             {status}
           </div>
         )}
-
-        {/* Welcome Badge */}
-        <div className="flex items-center justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
-            <ShieldCheck className="h-4 w-4" />
-            Secure Login Access
-          </div>
-        </div>
 
         <div className="grid gap-5">
 
@@ -197,7 +185,7 @@ export default function Login({
             type="submit"
             disabled={form.processing}
             data-test="login-button"
-            className="h-12 w-full rounded-xl cursor-pointer bg-primary text-sm font-semibold shadow-lg shadow-primary/20 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-primary/30"
+            variant="default"
           >
             {form.processing ? (
               <>
@@ -205,19 +193,11 @@ export default function Login({
                 Memproses...
               </>
             ) : (
-              'Masuk ke Dashboard'
+              'Login'
             )}
           </Button>
 
         </div>
-
-        <small className="w-full text-center text-slate-400">
-          &copy; {new Date().getFullYear()}{' '}
-          {getConfig(
-            'site_name',
-            'Alumoda Sinergi Kontainer Indonesia'
-          )}
-        </small>
 
       </form>
     </AuthLayout>

@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
+use App\Enums\SystemScopeIdentifierType;
+use App\Enums\AppIdentifier;
 
 class RoleSeeder extends Seeder
 {
@@ -18,33 +20,42 @@ class RoleSeeder extends Seeder
 
         $roles = [
             [
+                'code' => 'sys_superadmin',
                 'name' => 'Super Admin',
                 'guard_name' => 'web',
                 'description' => 'Super Administrator dengan akses penuh',
+                'type' => SystemScopeIdentifierType::SYSTEM,
+                'is_default' => true,
                 'is_active' => true,
             ],
             [
-                'name' => 'Admin',
-                'guard_name' => 'web',
-                'description' => 'Administrator dengan akses mayoritas fitur',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Owner',
+                'code' => 'ws_cf_owner', // ws (workspace) cf (cashflow app prefix)
+                'app_prefix' => AppIdentifier::CASHFLOW,
+                'name' => 'Cashflow Owner',
                 'guard_name' => 'web',
                 'description' => 'Owner Pemilik Perusahaan',
+                'type' => SystemScopeIdentifierType::WORKSPACE,
+                'is_default' => true,
                 'is_active' => true,
             ],
             [
-                'name' => 'Editor',
+                'code' => 'ws_cf_admin',
+                'app_prefix' => AppIdentifier::CASHFLOW,
+                'name' => 'Cashflow Admin',
                 'guard_name' => 'web',
-                'description' => 'Editor untuk konten dan artikel',
+                'description' => 'Administrator Aplikasi Cashflow',
+                'type' => SystemScopeIdentifierType::WORKSPACE,
+                'is_default' => true,
                 'is_active' => true,
             ],
             [
-                'name' => 'User',
+                'code' => 'ws_cf_user',
+                'app_prefix' => AppIdentifier::CASHFLOW,
+                'name' => 'Cashflow User',
                 'guard_name' => 'web',
-                'description' => 'User biasa dengan akses terbatas',
+                'description' => 'Pengguna Aplikasi Cashflow',
+                'type' => SystemScopeIdentifierType::WORKSPACE,
+                'is_default' => true,
                 'is_active' => true,
             ],
         ];

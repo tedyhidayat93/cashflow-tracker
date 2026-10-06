@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Cashflow\WalletTransfer;
+namespace App\DTOs\Cashflow\Wallet;
 
 use Carbon\Carbon;
 

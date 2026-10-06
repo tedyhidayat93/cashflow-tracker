@@ -2,12 +2,15 @@
 
 namespace App\Services\Cashflow;
 
-use App\DTOs\Cashflow\Workspace\CreateWorkspaceData;
-use App\DTOs\Cashflow\Workspace\UpdateWorkspaceData;
-use App\Models\Cashflow\Workspace;
-use App\Models\Cashflow\WorkspaceUser;
+use App\DTOs\Core\Workspace\CreateWorkspaceData;
+use App\DTOs\Core\Workspace\UpdateWorkspaceData;
+use App\DTOs\Cashflow\Workspace\UpdateWorkspaceSettingData;
+use App\Services\Cashflow\ActivityLogService;
+use App\Models\Workspace;
+use App\Models\WorkspaceUser;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
 
 class WorkspaceService
@@ -117,6 +120,29 @@ class WorkspaceService
         return $workspace->fresh();
     }
 
+    public function updateSettings(
+        Workspace $workspace,
+        UpdateWorkspaceSettingData $data
+    ): Workspace {
+        $old = $workspace->only(['name', 'currency', 'timezone', 'description']);
+
+        $workspace->update([
+            'name' => $data->name,
+            'currency' => $data->currency,
+            'timezone' => $data->timezone,
+            'description' => $data->description,
+        ]);
+
+        $this->activityLogService->updated(
+            subject: $workspace,
+            oldValues: $old,
+            newValues: $workspace->fresh()->only(['name', 'currency', 'timezone', 'description']),
+            description: 'Pengaturan workspace diperbarui'
+        );
+
+        return $workspace->fresh();
+    }
+
     /**
      * Archive workspace.
      */
@@ -128,7 +154,7 @@ class WorkspaceService
             'is_active' => false,
         ]);
 
-        $this->activityLogService->log(
+        $this->activityLogService->custom(
             event: 'workspace.archived',
             subject: $workspace,
             description: 'Workspace diarsipkan'
@@ -146,7 +172,7 @@ class WorkspaceService
             'is_active' => true,
         ]);
 
-        $this->activityLogService->log(
+        $this->activityLogService->custom(
             event: 'workspace.activated',
             subject: $workspace,
             description: 'Workspace diaktifkan'
@@ -177,7 +203,7 @@ class WorkspaceService
             'current_workspace_id' => $workspace->id,
         ]);
 
-        $this->activityLogService->log(
+        $this->activityLogService->custom(
             event: 'workspace.switched',
             subject: $workspace,
             description: 'Berpindah workspace'

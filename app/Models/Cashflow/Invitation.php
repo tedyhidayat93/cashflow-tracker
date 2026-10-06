@@ -4,6 +4,7 @@ namespace App\Models\Cashflow;
 
 use App\Models\Cashflow\BaseModel;
 use App\Models\User;
+use App\Models\Workspace;
 
 class Invitation extends BaseModel
 {

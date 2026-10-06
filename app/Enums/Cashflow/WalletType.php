@@ -17,7 +17,7 @@ enum WalletType: string
             self::BANK => 'Rekening Bank',
             self::EWALLET => 'E-Wallet',
             self::CREDIT_CARD => 'Kartu Kredit',
-            
+            self::INVESTMENT => 'Investasi',
         };
     }
 

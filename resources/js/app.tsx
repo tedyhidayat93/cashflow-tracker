@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 import { WishlistProvider } from './contexts/WishlistContext';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Alumoda Sinergi Kontainer Indonesia';
+const appName = import.meta.env.VITE_APP_NAME || 'Cashflow Tracker';
 
 createInertiaApp({
   title: (title) => (title ? `${title}` : appName),

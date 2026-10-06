@@ -4,9 +4,13 @@ namespace App\Models\Cashflow;
 
 use App\Models\Cashflow\BaseModel;
 use App\Enums\Cashflow\CategoryType;
+use App\Models\Workspace;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends BaseModel
 {
+    use SoftDeletes;
+
     protected $table = 'cf_categories';
 
     protected $guarded = [
@@ -34,7 +38,7 @@ class Category extends BaseModel
         'is_active' => 'boolean',
     ];
 
-    public function workspace()
+    public function workspaceArea()
     {
         return $this->belongsTo(Workspace::class, 'workspace_id');
     }

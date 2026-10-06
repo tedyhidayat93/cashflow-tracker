@@ -18,7 +18,7 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
             $table->foreignId('workspace_id')
-                ->constrained('cf_workspaces')
+                ->constrained('workspaces')
                 ->cascadeOnDelete();
 
             /*

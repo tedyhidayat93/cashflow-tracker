@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Cashflow\Workspace;
+use App\Models\Workspace;
 
 if (! function_exists('current_workspace_id')) {
     function current_workspace_id(): ?int

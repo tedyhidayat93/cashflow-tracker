@@ -2,16 +2,17 @@
 
 namespace App\Services\Cashflow;
 
-use App\DTOs\Cashflow\WalletTransfer\CreateWalletTransferData;
-use App\DTOs\Cashflow\WalletTransfer\UpdateWalletTransferData;
+use App\DTOs\Cashflow\Category\CreateCategoryData;
+use App\DTOs\Cashflow\Wallet\CreateWalletTransferData;
+use App\DTOs\Cashflow\Wallet\UpdateWalletTransferData;
 use App\DTOs\Cashflow\Transaction\CreateTransactionData;
-
+use App\Enums\Cashflow\CategoryType;
 use App\Models\Cashflow\Wallet;
 use App\Models\Cashflow\WalletTransfer;
-
 use App\Enums\Cashflow\TransactionType;
 use App\Enums\Cashflow\TransactionStatus;
-
+use App\Models\Cashflow\Category;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -20,6 +21,7 @@ class WalletTransferService extends BaseService
     public function __construct(
         ActivityLogService $activityLogService,
         protected TransactionService $transactionService,
+        protected CategoryService $categoryService,
     ) {
         parent::__construct(
             $activityLogService
@@ -32,13 +34,13 @@ class WalletTransferService extends BaseService
 
         return DB::transaction(function () use ($data) {
 
-            $fromWallet = Wallet::workspace()
+            $fromWallet = Wallet::forWorkspace()
                 ->lockForUpdate()
                 ->findOrFail(
                     $data->fromWalletId
                 );
 
-            $toWallet = Wallet::workspace()
+            $toWallet = Wallet::forWorkspace()
                 ->lockForUpdate()
                 ->findOrFail(
                     $data->toWalletId
@@ -143,13 +145,13 @@ class WalletTransferService extends BaseService
                 $transfer
             );
 
-            $fromWallet = Wallet::workspace()
+            $fromWallet = Wallet::forWorkspace()
                 ->lockForUpdate()
                 ->findOrFail(
                     $data->fromWalletId
                 );
 
-            $toWallet = Wallet::workspace()
+            $toWallet = Wallet::forWorkspace()
                 ->lockForUpdate()
                 ->findOrFail(
                     $data->toWalletId
@@ -310,6 +312,27 @@ class WalletTransferService extends BaseService
         }
     }
 
+    public function paginate(array $filters = [], int $perPage = 15): LengthAwarePaginator
+    {
+        return WalletTransfer::query()
+            ->forWorkspace()
+            ->with(['fromWallet:id,name,currency', 'toWallet:id,name,currency'])
+            ->when($filters['wallet_id'] ?? null, function ($q, $v) {
+                $q->where(fn ($q) => $q->where('from_wallet_id', $v)->orWhere('to_wallet_id', $v));
+            })
+            ->when($filters['date_from'] ?? null, fn ($q, $v) => $q->whereDate('transfer_date', '>=', $v))
+            ->when($filters['date_to'] ?? null, fn ($q, $v) => $q->whereDate('transfer_date', '<=', $v))
+            ->when($filters['search'] ?? null, function ($q, $s) {
+                $q->where(fn ($q) => $q->where('title', 'like', "%{$s}%")
+                    ->orWhere('reference_number', 'like', "%{$s}%"));
+            })
+            ->orderByDesc('transfer_date')
+            ->orderByDesc('id')
+            ->paginate($perPage)
+            ->withQueryString();
+    }
+
+
     private function deleteLinkedTransactions(
         WalletTransfer $transfer
     ): void {
@@ -335,23 +358,19 @@ class WalletTransferService extends BaseService
         Wallet $toWallet,
         CreateWalletTransferData|UpdateWalletTransferData $data
     ) {
+        $category = $this->getOrCreateCategory('Transfer Keluar', CategoryType::EXPENSE);
+
         return $this->transactionService->create(
             new CreateTransactionData(
                 walletId: $fromWallet->id,
-                categoryId: transfer_out_category_id(),
+                categoryId: $category->id,
 
                 type: TransactionType::EXPENSE,
                 status: TransactionStatus::POSTED,
 
                 amount: $data->amount,
-
                 transactionDate: $data->transferDate,
-
-                description: sprintf(
-                    'Transfer ke %s',
-                    $toWallet->name
-                ),
-
+                description: sprintf('Transfer ke %s', $toWallet->name),
                 referenceNo: $data->referenceNumber,
             )
         );
@@ -362,23 +381,19 @@ class WalletTransferService extends BaseService
         Wallet $toWallet,
         CreateWalletTransferData|UpdateWalletTransferData $data
     ) {
+        $category = $this->getOrCreateCategory('Transfer Masuk', CategoryType::INCOME);
+
         return $this->transactionService->create(
             new CreateTransactionData(
                 walletId: $toWallet->id,
-                categoryId: transfer_in_category_id(),
+                categoryId: $category->id,
 
                 type: TransactionType::INCOME,
                 status: TransactionStatus::POSTED,
 
                 amount: $data->amount,
-
                 transactionDate: $data->transferDate,
-
-                description: sprintf(
-                    'Transfer dari %s',
-                    $fromWallet->name
-                ),
-
+                description: sprintf('Transfer dari %s', $fromWallet->name),
                 referenceNo: $data->referenceNumber,
             )
         );
@@ -388,21 +403,43 @@ class WalletTransferService extends BaseService
         Wallet $fromWallet,
         CreateWalletTransferData|UpdateWalletTransferData $data
     ) {
+        $category = $this->getOrCreateCategory('Biaya Transfer', CategoryType::EXPENSE);
+
         return $this->transactionService->create(
             new CreateTransactionData(
                 walletId: $fromWallet->id,
-                categoryId: transfer_fee_category_id(),
+                categoryId: $category->id,
 
                 type: TransactionType::EXPENSE,
                 status: TransactionStatus::POSTED,
 
                 amount: $data->fee,
-
                 transactionDate: $data->transferDate,
-
                 description: 'Biaya transfer',
-
                 referenceNo: $data->referenceNumber,
+            )
+        );
+    }
+
+    private function getOrCreateCategory(string $name, CategoryType $type): Category
+    {
+        $category = Category::forWorkspace()
+            ->where('name', $name)
+            ->where('type', $type->value)
+            ->first();
+
+        if ($category) {
+            return $category;
+        }
+
+        // Pass semua argumen wajib atau gunakan Named Arguments yang sesuai DTO
+        return $this->categoryService->create(
+            new CreateCategoryData(
+                parentId: null, // Argumen 1 (wajib)
+                name: $name,    // Argumen 2 (wajib)
+                type: $type,    // Argumen 3 (wajib bertipe CategoryType)
+                description: "Kategori sistem untuk {$name}",
+                isActive: true,
             )
         );
     }

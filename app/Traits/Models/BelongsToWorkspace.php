@@ -2,20 +2,22 @@
 
 namespace App\Traits\Models;
 
-use App\Models\Cashflow\Workspace;
+use App\Models\Workspace as ModelsWorkspace;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
 trait BelongsToWorkspace
 {
     public function workspace(): BelongsTo
     {
-        return $this->belongsTo(
-            Workspace::class
-        );
+        return $this->belongsTo(ModelsWorkspace::class);
     }
 
-    public function scopeWorkspace(
+    // Method 'scopeForWorkspace' diakses via 'Transaction::forWorkspace()'
+    public function scopeForWorkspace(
         Builder $query,
         ?int $workspaceId = null
     ): Builder {

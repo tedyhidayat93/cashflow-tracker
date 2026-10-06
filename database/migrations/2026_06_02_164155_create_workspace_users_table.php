@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cf_workspace_users', function (Blueprint $table) {
+        Schema::create('workspace_users', function (Blueprint $table) {
             $table->id();
 
             /*
@@ -20,7 +20,7 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
             $table->foreignId('workspace_id')
-                ->constrained('cf_workspaces')
+                ->constrained('workspaces')
                 ->cascadeOnDelete();
 
             $table->foreignId('user_id')
@@ -81,6 +81,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cf_workspace_users');
+        Schema::dropIfExists('workspace_users');
     }
 };

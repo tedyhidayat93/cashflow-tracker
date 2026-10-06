@@ -3,7 +3,6 @@ import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
 
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -96,9 +95,9 @@ export default function Register() {
 
             <div className="text-muted-foreground text-center text-sm">
               Already have an account?{' '}
-              <TextLink href={login()} tabIndex={6}>
+              <a href="/login" tabIndex={6}>
                 Log in
-              </TextLink>
+              </a>
             </div>
           </>
         )}

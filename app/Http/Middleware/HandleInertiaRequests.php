@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Constants\AppMenu;
+use App\Enums\AppIdentifier;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -39,7 +41,7 @@ class HandleInertiaRequests extends Middleware
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
         $user = $request->user();
-        
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -55,12 +57,45 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn () => $request->session()->get('error'),
             ],
             'appUrl' => config('app.url'),
-            'seo' => [
-                'title' => null,
-                'description' => null,
-                'image' => null,
-                'keywords' => null,
-            ],
+            'sidebarMenu' => $this->getSidebarMenu($request),
         ];
+    }
+
+    /**
+     * Mendapatkan struktur menu sidebar secara dinamis berdasarkan URL path dan role.
+     *
+     * @param Request $request
+     * @return array
+     */
+    protected function getSidebarMenu(Request $request): array
+    {
+        $path = $request->path();
+
+        // 1. Cek jika mengakses area Superadmin
+        if ($request->is('superadmin*')) {
+            return AppMenu::superadmin();
+        }
+
+        // 2. Cek pola URL workspace: /w/{slug}/{app_prefix}
+        if (preg_match('/^w\/([^\/]+)\/([^\/]+)/', $path, $matches)) {
+            $workspaceSlug = $matches[1];
+            $appPrefix = $matches[2];
+
+            if ($appPrefix === AppIdentifier::CASHFLOW->value) {
+                return AppMenu::cashflow($workspaceSlug);
+            }
+
+            // Tambahkan pendaftaran modul lain di sini jika ada (misal: inventory, hrm, dll)
+        }
+
+        // 3. Fallback pertama: ambil dari config/app_menu.php jika tersedia
+        $configMenu = config('app_menu.cpanel');
+
+        if (! empty($configMenu) && is_array($configMenu)) {
+            return $configMenu;
+        }
+
+        // 4. Fallback terakhir: gunakan struktur menu default jika config/app_menu.php kosong
+        return AppMenu::default();
     }
 }

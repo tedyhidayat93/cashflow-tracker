@@ -5,7 +5,6 @@ import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -57,7 +56,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
         <div className="text-muted-foreground space-x-1 text-center text-sm">
           <span>Or, return to</span>
-          <TextLink href={login()}>log in</TextLink>
+          <a href="/login">log in</a>
         </div>
       </div>
     </AuthLayout>

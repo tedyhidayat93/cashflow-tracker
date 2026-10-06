@@ -13,6 +13,7 @@ readonly class CreateTransactionData
         public TransactionType $type,
         public float $amount,
         public string $transactionDate,
+        public ?string $title = null,
         public ?string $description = null,
         public ?string $referenceNo = null,
         public ?array $attachments = null,

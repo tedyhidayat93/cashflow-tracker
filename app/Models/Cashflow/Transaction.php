@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\Cashflow\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\Cashflow\TransactionType;
-use App\Enums\Cashflow\TransactionStatus;
 
 
 class Transaction extends BaseModel
@@ -44,7 +43,6 @@ class Transaction extends BaseModel
         'transaction_date' => 'date',
         'metadata' => 'array',
         'type' => TransactionType::class,
-        'status' => TransactionStatus::class,
     ];
 
     /*
@@ -63,22 +61,6 @@ class Transaction extends BaseModel
         return $this->belongsTo(Category::class);
     }
 
-    public function creator()
-    {
-        return $this->belongsTo(
-            User::class,
-            'created_by'
-        );
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(
-            User::class,
-            'updated_by'
-        );
-    }
-
     public function attachments()
     {
         return $this->hasMany(
@@ -91,17 +73,6 @@ class Transaction extends BaseModel
     | Scopes
     |--------------------------------------------------------------------------
     */
-
-    public function scopeWorkspace(
-        Builder $query,
-        int $workspaceId
-    ): Builder {
-        return $query->where(
-            'workspace_id',
-            $workspaceId
-        );
-    }
-
     public function scopeIncome(
         Builder $query
     ): Builder {
